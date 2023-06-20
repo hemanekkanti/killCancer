@@ -40,7 +40,8 @@ public class Cell extends Particle{
             case 2 -> {t=200;}
             case 3 -> {t=240;}
         }
-        return cellPhase.values()[stage];
+        t=0;
+        return cellPhase.G1;//cellPhase.values()[stage];
     }
 
     public void phases(){
@@ -72,6 +73,7 @@ public class Cell extends Particle{
     public void changePhase(){
         t+=1;
         if(t==120){
+            t = 249;
             phase = cellPhase.S;
         } else if (t==200) {
             phase = cellPhase.G2;
@@ -93,7 +95,7 @@ public class Cell extends Particle{
     private synchronized void addChildCell() throws OutOfSpaceException{
         Cell addedCell = null;
         for(int i = 0; i < 1000; i++) {
-            addedCell = new Cell(radius, this);
+            addedCell = new Cell(radius*0.75, this);
             if (newCellList.parallelStream().anyMatch(addedCell::isOverlapping)) addedCell = null;
             else break;
         }
