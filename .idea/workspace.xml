@@ -4,24 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4f69faf-9453-4b61-9000-bbb97a9535bc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/nano.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/nano__2_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Chemo and Cancer.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nano.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nano.jar!/nano/Pen2.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Cancer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Cell.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Chemo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/OutOfSpaceException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Particle.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Simulation.java" afterDir="false" />
+    <list default="true" id="f4f69faf-9453-4b61-9000-bbb97a9535bc" name="Changes" comment="horrible bounce version">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Cancer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cancer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Particle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Particle.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,6 +86,18 @@
       <option name="presentableId" value="Default" />
       <updated>1685967305751</updated>
     </task>
+    <task id="LOCAL-00001" summary="horrible bounce version">
+      <created>1687276266748</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1687276266748</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="horrible bounce version" />
+    <option name="LAST_COMMIT_MESSAGE" value="horrible bounce version" />
   </component>
 </project>

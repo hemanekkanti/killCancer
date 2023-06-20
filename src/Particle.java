@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Particle {
-    private double radius;
+    protected double radius;
     private Color colour;
     protected static Pen pen;
     protected double x;
@@ -121,7 +121,7 @@ public class Particle {
     }
 
     public boolean isOverlapping(Particle p){
-        if (p!=this) return separationDistance(p)<=2*radius;
+        if (p!=this) return separationDistance(p)<=2*30;
         else return false;
     }
     public void draw(){

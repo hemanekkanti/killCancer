@@ -5,21 +5,23 @@ import java.util.Random;
 
 public class Cell extends Particle{
     protected Color colour = Color.BLUE;
-    protected double radius;
+    protected double innerRadius;
     protected final Random rand = new Random();
     protected cellPhase phase;
     private static List<Cell> newCellList;
     public static void setNewCellList(List<Cell> l) {newCellList = l;}
     int t;
 
-    public Cell(double radius) throws OutOfSpaceException {
-        super(radius);
+    public Cell(double innerRadius) throws OutOfSpaceException {
+        super(30);
+        this.innerRadius = innerRadius;
         phase = spawnPhase();
         phases();
     }
 
-    private Cell(double radius, Cell parent) throws OutOfSpaceException {
-        super(radius);
+    private Cell(double innerRadius, Cell parent) throws OutOfSpaceException {
+        super(30);
+        this.innerRadius = innerRadius;
         // set position according to parent?
         phase = cellPhase.G1;
         phases();
@@ -44,27 +46,27 @@ public class Cell extends Particle{
     }
 
     public void phases(){
-        double outerRadius = 30;
+        double outerRadius = radius;
         switch (phase) {
             case G1 -> {
                 colour = Color.GREEN;
-                radius = 0.5 * outerRadius;
+                innerRadius = 0.5 * outerRadius;
             }
             case S -> {
                 colour = Color.RED;
-                radius = 0.7 * outerRadius;
+                innerRadius = 0.7 * outerRadius;
             }
             case G2 -> {
                 colour = Color.YELLOW;
-                radius = 0.8 * outerRadius;
+                innerRadius = 0.8 * outerRadius;
             }
             case M -> {
                 colour = Color.CYAN;
-                radius = outerRadius;
+                innerRadius = outerRadius;
             }
             case G0 -> {
                 colour = Color.GRAY;
-                radius = outerRadius;
+                innerRadius = outerRadius;
             }
         }
     }
@@ -84,6 +86,7 @@ public class Cell extends Particle{
                 addChildCell();
             } catch (OutOfSpaceException e) {
                 phase = cellPhase.G0;
+                t=251;
             }
         }
         phases();
@@ -103,7 +106,7 @@ public class Cell extends Particle{
     @Override
     public void draw(){
         changePhase();
-        pen.drawCircle((int)x,(int)y,30,Color.WHITE, false);
-        pen.drawCircle((int)x,(int)y,(int) radius,colour, true);
+        pen.drawCircle((int)x,(int)y,(int)radius,Color.WHITE, false);
+        pen.drawCircle((int)x,(int)y,(int) innerRadius,colour, true);
     }
 }

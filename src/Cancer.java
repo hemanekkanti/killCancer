@@ -3,8 +3,8 @@ import java.awt.*;
 public class Cancer extends Cell{
     private int outerR = 35;
 
-    public Cancer(double radius) throws OutOfSpaceException {
-        super(radius);
+    public Cancer(double innerRadius) throws OutOfSpaceException {
+        super(innerRadius);
         phase = spawnPhase();
         phases();
     }
@@ -39,13 +39,13 @@ public class Cancer extends Cell{
     @Override
     public void draw(){
         changePhase();
-        pen.drawCircle((int)x,(int)y,30, Color.WHITE, false);
+        pen.drawCircle((int)x,(int)y,(int)radius, Color.WHITE, false);
         for(int i=0; i<12; i++){
             double theta = i*(Math.PI/6);
             double x2 = x+outerR * Math.cos(theta);
             double y2 = y+outerR * Math.sin(theta);
             pen.drawLine((int)x,(int)y,(int)x2,(int)y2,Color.WHITE);
         }
-        pen.drawCircle((int)x,(int)y,(int) radius, colour, true);
+        pen.drawCircle((int)x,(int)y,(int) innerRadius, colour, true);
     }
 }
