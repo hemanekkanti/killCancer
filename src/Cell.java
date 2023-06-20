@@ -12,16 +12,14 @@ public class Cell extends Particle{
     public static void setNewCellList(List<Cell> l) {newCellList = l;}
     int t;
 
-    public Cell(double innerRadius) throws OutOfSpaceException {
-        super(30);
-        this.innerRadius = innerRadius;
+    public Cell(double radius) throws OutOfSpaceException {
+        super(radius);
         phase = spawnPhase();
         phases();
     }
 
-    private Cell(double innerRadius, Cell parent) throws OutOfSpaceException {
-        super(30);
-        this.innerRadius = innerRadius;
+    private Cell(double radius, Cell parent) throws OutOfSpaceException {
+        super(radius);
         // set position according to parent?
         phase = cellPhase.G1;
         phases();
@@ -95,7 +93,7 @@ public class Cell extends Particle{
     private synchronized void addChildCell() throws OutOfSpaceException{
         Cell addedCell = null;
         for(int i = 0; i < 1000; i++) {
-            addedCell = new Cell(10, this);
+            addedCell = new Cell(radius, this);
             if (newCellList.parallelStream().anyMatch(addedCell::isOverlapping)) addedCell = null;
             else break;
         }

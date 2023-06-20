@@ -12,8 +12,8 @@ public class Simulation {
         Pen pen = new Pen(screen);
         Random rand = new Random();
 
-        double radius = 30;
-        int ncells = 10;
+        double radius = 15;
+        int ncells = 100;
         double thickness = 150;
         double lowerEdge = (ySize-thickness)/2 ;
         double upperEdge = (ySize+thickness)/2 ;
@@ -27,13 +27,10 @@ public class Simulation {
 
         Particle.setRestrainList(cells);
 
-
-        //List<Cancer> cancerCells = new ArrayList<>();
-
         try {
             for (int i = 0; i < ncells; i++) cells.add(new Cell(radius));
             cells.add(new Cancer(radius));
-        } catch (OutOfSpaceException s) {
+        } catch (Particle.OutOfSpaceException s) {
             throw new RuntimeException(s);
         }
 
@@ -41,13 +38,13 @@ public class Simulation {
             pen.drawRectangle(0, (int) lowerEdge, xSize-1, (int) thickness, Color.PINK, true);
             newCells.clear();
             cells.forEach(c -> {
-                        do {
+                        c.move();
+                        int i = 0;
+                        while (cells.parallelStream().anyMatch(c::isOverlapping)) {
+                            c.unmove();
+                            if (i++ > 20) break;
                             c.move();
-                            if (cells.parallelStream().anyMatch(c::isOverlapping)) {
-                                c.unmove();
-                                c.unmove();
-                            }
-                        } while (cells.parallelStream().anyMatch(c::isOverlapping));
+                        }
                         c.draw();
                     });
             cells.addAll(newCells);
