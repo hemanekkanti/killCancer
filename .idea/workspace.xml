@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f4f69faf-9453-4b61-9000-bbb97a9535bc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/nano.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/nano__2_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Chemo and Cancer.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nano.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nano.jar!/nano/Pen2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Cancer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Cell.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Chemo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/OutOfSpaceException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Particle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Simulation.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$PROJECT_DIR$/nano.jar!/nano/Canvas.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$PROJECT_DIR$/nano.jar!/nano/Pen.class" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="ProjectId" id="2QmmnmSn53vAtLu4uuBot4i3Cs3" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/hemanekkanti/Library/CloudStorage/OneDrive-DelftUniversityofTechnology/Biomolecular Programming 2023/Chemo and Cancer/nano.jar!/nano",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/nano.jar!/nano" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Simulation">
+    <configuration name="Simulation" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Simulation" />
+      <module name="Chemo and Cancer" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="nano.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/nano.jar" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.Simulation" />
+      <item itemvalue="JAR Application.nano.jar" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JAR Application.nano.jar" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f4f69faf-9453-4b61-9000-bbb97a9535bc" name="Changes" comment="" />
+      <created>1685967305751</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1685967305751</updated>
+    </task>
+    <servers />
+  </component>
+</project>
