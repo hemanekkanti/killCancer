@@ -12,14 +12,14 @@ public class Particle {
     protected static Pen pen;
     protected double x;
     protected double y;
-    private double dx;
-    private double dy;
-    private final Random rand = new Random();
-    private static double xSize;
-    private static double ySize;
-    private int t;
-    private static double lowerEdge;
-    private static double upperEdge;
+    protected double dx;
+    protected double dy;
+    protected final Random rand = new Random();
+    protected static double xSize;
+    protected static double ySize;
+    protected int t;
+    protected static double lowerEdge;
+    protected static double upperEdge;
 
     private static List<? extends Particle> restrain;
 
@@ -74,7 +74,6 @@ public class Particle {
             dy = -dy;
             if(onLowerEdge()) y=lowerEdge-radius;
             else y=upperEdge+radius;
-            randomizeDirection();
         }
     }
 
@@ -99,14 +98,19 @@ public class Particle {
 
     private void spawnParticle() throws OutOfSpaceException {
         for (int tries = 0; tries<100; tries++) {
-            x = rand.nextDouble(radius, xSize - radius);
-            boolean chance = rand.nextBoolean();
-            y = chance ? rand.nextDouble(radius, lowerEdge) : rand.nextDouble(upperEdge, ySize - radius);
+            randomizePosition();
             if (restrain.parallelStream().noneMatch(this::isOverlapping)) return;
         }
         throw new OutOfSpaceException("Particle could not be spawned :'(");
     }
-    private void randomizeDirection() {
+
+    protected void randomizePosition() {
+        x = rand.nextDouble(radius, xSize - radius);
+        boolean chance = rand.nextBoolean();
+        y = chance ? rand.nextDouble(radius, lowerEdge-radius) : rand.nextDouble(upperEdge+radius, ySize - radius);
+    }
+
+    protected void randomizeDirection() {
         dx = rand.nextDouble(-5, 5);
         dy = rand.nextDouble(-5, 5);
     }
@@ -120,8 +124,7 @@ public class Particle {
         else return false;
     }
     public void draw(){
-        pen.drawCircle((int)x,(int)y,(int) radius,Color.WHITE, false);
-        //pen.drawCircle((int)x,(int)y,(int) (0.7*radius),Color.RED, true);
+        pen.drawCircle((int)x,(int)y,(int) radius,Color.WHITE, true);
     }
 
     public static class OutOfSpaceException extends Exception{

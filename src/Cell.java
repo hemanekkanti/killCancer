@@ -75,13 +75,13 @@ public class Cell extends Particle{
     public void changePhase(){
         t+=1;
         double chance = rand.nextDouble();
-        if(t>120 && phase == cellPhase.G1 && chance<0.7){
+        if(t>120 && phase == cellPhase.G1 && chance<0.07){
             phase = cellPhase.S;
-        } else if (t>200 && phase == cellPhase.S && chance<0.8) {
+        } else if (t>200 && phase == cellPhase.S && chance<0.08) {
             phase = cellPhase.G2;
-        } else if (t>240 && phase == cellPhase.G2 && chance<0.9) {
+        } else if (t>240 && phase == cellPhase.G2 && chance<0.1) {
             phase = cellPhase.M;
-        } else if (t>260 && phase == cellPhase.M && chance<0.65) {
+        } else if (t>260 && phase == cellPhase.M && chance<0.06) {
             t=1;
             phase = cellPhase.G1;
             try {
