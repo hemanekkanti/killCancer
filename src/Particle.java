@@ -20,6 +20,7 @@ public class Particle {
     protected int t;
     protected static double lowerEdge;
     protected static double upperEdge;
+    protected boolean gravestone;
 
     private static List<? extends Particle> restrain;
 
@@ -55,10 +56,7 @@ public class Particle {
         y -= dy;
     }
 
-    private boolean onInnerEdge(){
-        return y > (int) (ySize/2-150/2) || y < (int) (ySize/2+150/2);
-    }
-
+    protected boolean isInsideVessel(){ return y > lowerEdge+radius && y < upperEdge-radius; }
     private boolean onOuterEdge(){
         return (onLowerEdge() || onUpperEdge());
     }
@@ -99,7 +97,7 @@ public class Particle {
     private void spawnParticle() throws OutOfSpaceException {
         for (int tries = 0; tries<100; tries++) {
             randomizePosition();
-            if (restrain.parallelStream().noneMatch(this::isOverlapping)) return;
+            if (restrain.stream().noneMatch(this::isOverlapping)) return;
         }
         throw new OutOfSpaceException("Particle could not be spawned :'(");
     }
@@ -111,8 +109,8 @@ public class Particle {
     }
 
     protected void randomizeDirection() {
-        dx = rand.nextDouble(-5, 5);
-        dy = rand.nextDouble(-5, 5);
+        dx = rand.nextDouble(-2, 2);
+        dy = rand.nextDouble(-2, 2);
     }
 
     private double separationDistance(Particle p){
@@ -131,4 +129,7 @@ public class Particle {
         public OutOfSpaceException(String s) {
         }
     }
+
+    protected void killSelf() {gravestone=true;}
+    public boolean mustDie() {return gravestone;}
 }

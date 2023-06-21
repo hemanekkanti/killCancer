@@ -9,9 +9,7 @@ public class Cell extends Particle{
     protected final Random rand = new Random();
     protected cellPhase phase;
     protected static List<Cell> newCellList;
-    protected static List<Cell> hitList;
     public static void setNewCellList(List<Cell> l) {newCellList = l;}
-    public static void setHitList(List<Cell> h) {hitList = h;}
     int t;
     private int numberOfdivisions;
 
@@ -98,7 +96,7 @@ public class Cell extends Particle{
         Cell addedCell = null;
         for(int i = 0; i < 1000; i++) {
             addedCell = new Cell(radius, this);
-            if (newCellList.parallelStream().anyMatch(addedCell::isOverlapping)) addedCell = null;
+            if (newCellList.stream().anyMatch(addedCell::isOverlapping)) addedCell = null;
             else break;
         }
         if (addedCell == null) throw new OutOfSpaceException("Child cell no spawn me cry");
@@ -107,15 +105,15 @@ public class Cell extends Particle{
         if(numberOfdivisions>=5) killSelf();
     }
 
-    private synchronized void killSelf(){
-        hitList.add(this);
-    }
-
 
     @Override
     public void draw(){
-        changePhase();
+        //changePhase();  // moved to simulation
         pen.drawCircle((int)x,(int)y,(int)radius,Color.WHITE, false);
         pen.drawCircle((int)x,(int)y,(int) innerRadius,colour, true);
+    }
+
+    public boolean vulnerableToChemo() {
+        return phase == cellPhase.M;
     }
 }

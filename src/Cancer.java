@@ -50,7 +50,7 @@ public class Cancer extends Cell{
 
     @Override
     public void draw(){
-        changePhase();
+        //changePhase(); // moved to simulation
         pen.drawCircle((int)x,(int)y,(int)radius, Color.WHITE, false);
         int numSpikes = 12;
         for(int i=0; i<numSpikes; i++){

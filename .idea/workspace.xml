@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4f69faf-9453-4b61-9000-bbb97a9535bc" name="Changes" comment="FIX overlaps :))))))))">
+    <list default="true" id="f4f69faf-9453-4b61-9000-bbb97a9535bc" name="Changes" comment="bro">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Cancer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cancer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cell.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Chemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Chemo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Particle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Particle.java" afterDir="false" />
@@ -101,12 +102,36 @@
       <option name="project" value="LOCAL" />
       <updated>1687276958933</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="bouncy bouncy and initialized chemo :D">
+      <created>1687374978918</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1687374978918</updated>
+    </task>
+    <task id="LOCAL-00004" summary="giiiitiiiignoooor">
+      <created>1687374996477</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1687374996477</updated>
+    </task>
+    <task id="LOCAL-00005" summary="bro">
+      <created>1687375011010</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1687375011010</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="horrible bounce version" />
     <MESSAGE value="FIX overlaps :))))))))" />
-    <option name="LAST_COMMIT_MESSAGE" value="FIX overlaps :))))))))" />
+    <MESSAGE value="bouncy bouncy and initialized chemo :D" />
+    <MESSAGE value="giiiitiiiignoooor" />
+    <MESSAGE value="bro" />
+    <option name="LAST_COMMIT_MESSAGE" value="bro" />
   </component>
 </project>
