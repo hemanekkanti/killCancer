@@ -23,10 +23,6 @@ public class Particle {
 
     private static List<? extends Particle> restrain;
 
-    public double getRadius(){
-        return radius;
-    }
-
     public static void setRestrainList(List<? extends Particle> l) {restrain = l;}
 
     public Particle(double radius) throws OutOfSpaceException {
@@ -74,10 +70,11 @@ public class Particle {
     }
 
     public void bounceVessel() {
-        if(onOuterEdge()){
+        if(onOuterEdge() && !(this instanceof Cancer)){
             dy = -dy;
             if(onLowerEdge()) y=lowerEdge-radius;
             else y=upperEdge+radius;
+            randomizeDirection();
         }
     }
 
@@ -103,8 +100,8 @@ public class Particle {
     private void spawnParticle() throws OutOfSpaceException {
         for (int tries = 0; tries<100; tries++) {
             x = rand.nextDouble(radius, xSize - radius);
-            int chance = rand.nextInt(2);
-            y = chance == 0 ? rand.nextDouble(radius, ySize / 2 - (double) 150 / 2 - radius) : rand.nextDouble(ySize / 2 + (double) 150 / 2 + radius, ySize - radius);
+            boolean chance = rand.nextBoolean();
+            y = chance ? rand.nextDouble(radius, lowerEdge) : rand.nextDouble(upperEdge, ySize - radius);
             if (restrain.parallelStream().noneMatch(this::isOverlapping)) return;
         }
         throw new OutOfSpaceException("Particle could not be spawned :'(");

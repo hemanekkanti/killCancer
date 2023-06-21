@@ -13,7 +13,7 @@ public class Simulation {
         Random rand = new Random();
 
         double radius = 15;
-        int ncells = 100;
+        int ncells = 20;
         double thickness = 150;
         double lowerEdge = (ySize-thickness)/2 ;
         double upperEdge = (ySize+thickness)/2 ;
@@ -23,13 +23,14 @@ public class Simulation {
 
         List<Cell> cells = new ArrayList<>();
         List<Cell> newCells = new ArrayList<>();
+        List<Cell> hitList = new ArrayList<>();
         Cell.setNewCellList(newCells);
-
+        Cell.setHitList(hitList);
         Particle.setRestrainList(cells);
 
         try {
             for (int i = 0; i < ncells; i++) cells.add(new Cell(radius));
-            cells.add(new Cancer(radius));
+            //cells.add(new Cancer(radius));
         } catch (Particle.OutOfSpaceException s) {
             throw new RuntimeException(s);
         }
@@ -48,7 +49,8 @@ public class Simulation {
                         c.draw();
                     });
             cells.addAll(newCells);
-            //cancerCells.forEach(k -> k.move());
+            cells.removeAll(hitList);
+            pen.drawString(5, 5, Color.WHITE, "cell count:"+cells.size());
             screen.update();
             screen.pause(50);
             screen.clear();

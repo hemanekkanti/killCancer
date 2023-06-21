@@ -8,9 +8,12 @@ public class Cell extends Particle{
     protected double innerRadius;
     protected final Random rand = new Random();
     protected cellPhase phase;
-    private static List<Cell> newCellList;
+    protected static List<Cell> newCellList;
+    protected static List<Cell> hitList;
     public static void setNewCellList(List<Cell> l) {newCellList = l;}
+    public static void setHitList(List<Cell> h) {hitList = h;}
     int t;
+    private int numberOfdivisions;
 
     public Cell(double radius) throws OutOfSpaceException {
         super(radius);
@@ -71,26 +74,27 @@ public class Cell extends Particle{
 
     public void changePhase(){
         t+=1;
-        if(t==120){
+        double chance = rand.nextDouble();
+        if(t>120 && phase == cellPhase.G1 && chance<0.7){
             phase = cellPhase.S;
-        } else if (t==200) {
+        } else if (t>200 && phase == cellPhase.S && chance<0.8) {
             phase = cellPhase.G2;
-        } else if (t==240) {
+        } else if (t>240 && phase == cellPhase.G2 && chance<0.9) {
             phase = cellPhase.M;
-        } else if (t==250) {
+        } else if (t>260 && phase == cellPhase.M && chance<0.65) {
             t=1;
             phase = cellPhase.G1;
             try {
                 addChildCell();
             } catch (OutOfSpaceException e) {
                 phase = cellPhase.G0;
-                t=251;
+                t=261;
             }
         }
         phases();
     }
 
-    private synchronized void addChildCell() throws OutOfSpaceException{
+    protected synchronized void addChildCell() throws OutOfSpaceException{
         Cell addedCell = null;
         for(int i = 0; i < 1000; i++) {
             addedCell = new Cell(radius, this);
@@ -99,7 +103,14 @@ public class Cell extends Particle{
         }
         if (addedCell == null) throw new OutOfSpaceException("Child cell no spawn me cry");
         newCellList.add(addedCell);
+        numberOfdivisions++;
+        if(numberOfdivisions>=5) killSelf();
     }
+
+    private synchronized void killSelf(){
+        hitList.add(this);
+    }
+
 
     @Override
     public void draw(){
