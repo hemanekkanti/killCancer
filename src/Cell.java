@@ -109,11 +109,18 @@ public class Cell extends Particle{
     @Override
     public void draw(){
         //changePhase();  // moved to simulation
-        pen.drawCircle((int)x,(int)y,(int)radius,Color.WHITE, false);
-        pen.drawCircle((int)x,(int)y,(int) innerRadius,colour, true);
+        int drawRadius = drawRadius();
+        int inner = (int) ((innerRadius / radius) * drawRadius);
+        pen.drawCircle((int)x,(int)y,(int)drawRadius,Color.WHITE, false);
+        pen.drawCircle((int)x,(int)y,(int) inner,colour, true);
     }
 
     public boolean vulnerableToChemo() {
         return phase == cellPhase.M;
+    }
+
+    @Override
+    public boolean mustDie() {
+        return gravestone && y <= 0;
     }
 }

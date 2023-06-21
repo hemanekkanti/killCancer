@@ -22,6 +22,8 @@ public class Particle {
     protected static double upperEdge;
     protected boolean gravestone;
 
+    private int framesSinceSpawn;
+
     private static List<? extends Particle> restrain;
 
     public static void setRestrainList(List<? extends Particle> l) {restrain = l;}
@@ -68,7 +70,7 @@ public class Particle {
     }
 
     public void bounceVessel() {
-        if(onOuterEdge() && !(this instanceof Cancer)){
+        if(onOuterEdge() && !(this instanceof Cancer) && !gravestone){
             dy = -dy;
             if(onLowerEdge()) y=lowerEdge-radius;
             else y=upperEdge+radius;
@@ -82,6 +84,7 @@ public class Particle {
 
 
     public void bounceScreen() {
+        if (gravestone) return;
         if (x <= radius || x >= xSize-radius) {
             dx = -dx;
             if (x <= radius) x = radius;
@@ -109,8 +112,13 @@ public class Particle {
     }
 
     protected void randomizeDirection() {
-        dx = rand.nextDouble(-2, 2);
-        dy = rand.nextDouble(-2, 2);
+        if (!gravestone) {
+            dx = rand.nextDouble(-2, 2);
+            dy = rand.nextDouble(-2, 2);
+        } else {
+            dx = 0;
+            dy -= 0.1;
+        }
     }
 
     private double separationDistance(Particle p){
@@ -118,11 +126,22 @@ public class Particle {
     }
 
     public boolean isOverlapping(Particle p){
+        if (gravestone || p.gravestone) return false;
         if (p!=this) return separationDistance(p)<= radius + p.radius;
         else return false;
     }
+
+    protected int drawRadius() {
+        if (framesSinceSpawn == -1) return (int) radius;
+        if (framesSinceSpawn > 50) {
+            framesSinceSpawn = -1;
+            return drawRadius();
+        }
+        return (int) (radius * (framesSinceSpawn++ / 50.0));
+    }
+
     public void draw(){
-        pen.drawCircle((int)x,(int)y,(int) radius,Color.WHITE, true);
+        pen.drawCircle((int)x,(int)y, drawRadius(),Color.WHITE, true);
     }
 
     public static class OutOfSpaceException extends Exception{
@@ -130,6 +149,11 @@ public class Particle {
         }
     }
 
-    protected void killSelf() {gravestone=true;}
-    public boolean mustDie() {return gravestone;}
+    protected void killSelf() {
+        gravestone=true;
+        dy=0;
+    }
+    public boolean mustDie() {
+        return gravestone;
+    }
 }

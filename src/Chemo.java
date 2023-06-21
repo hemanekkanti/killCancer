@@ -3,6 +3,8 @@ import java.util.List;
 public class Chemo extends Particle{
     public static List<Chemo> drugsList;
 
+    private int pulseTimer = -1;
+
     public Chemo(double radius) throws OutOfSpaceException {
         super(radius);
     }
@@ -23,6 +25,9 @@ public class Chemo extends Particle{
         if (isInsideVessel()) {
             dx += 2;
             dy *= 1 - (x/(xSize*2));
+        } else {
+            if (y < ySize/2) dy -= 0.5;
+            else dy += 0.5;
         }
     }
 
@@ -30,6 +35,18 @@ public class Chemo extends Particle{
     public void move() {
         super.move();
         if (x >= xSize) killSelf();
+        if (rand.nextDouble()>0.995) killSelf();
+    }
+
+    @Override
+    protected int drawRadius() {
+
+        if (pulseTimer == -1) return super.drawRadius();
+        if (pulseTimer++ >= 30) {
+            pulseTimer = -1;
+            return super.drawRadius();
+        }
+        return (int) (radius + 50 * Math.sin(Math.PI * ((pulseTimer-1) / 30.0)));
     }
 
     public static void injectDrugs(int n) {
@@ -48,4 +65,6 @@ public class Chemo extends Particle{
 
     @Override
     public void bounceVessel(){}
+
+    public void pulsate() {if (pulseTimer == -1) pulseTimer = 0;}
 }
