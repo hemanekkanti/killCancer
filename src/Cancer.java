@@ -9,7 +9,7 @@ public class Cancer extends Cell{
     }
 
     private Cancer(double radius, Cancer parent) throws OutOfSpaceException{
-        super(radius);
+        super(radius, parent);
         phase = cellPhase.G1;
         phases();
     }
@@ -29,20 +29,20 @@ public class Cancer extends Cell{
     public void changePhase(){
         t+=1;
         double chance = rand.nextDouble();
-        if(t==60 && chance<0.7){
+        if(t>=60 && phase == cellPhase.G1 && chance<0.07){
             phase = cellPhase.S;
-        } else if (t==120 && chance<0.8) {
+        } else if (t>=90 && phase == cellPhase.S && chance<0.08) {
             phase = cellPhase.G2;
-        } else if (t==170 && chance<0.9) {
+        } else if (t>=120 && phase == cellPhase.G2 && chance<0.1) {
             phase = cellPhase.M;
-        } else if (t==180) {
+        } else if (t>=140 && phase == cellPhase.M && chance<0.06) {
             t=1;
             phase = cellPhase.G1;
             try {
                 addChildCell();
             } catch (OutOfSpaceException e) {
                 phase = cellPhase.G2;
-                t=120;
+                t=90;
             }
         }
         phases();
@@ -65,14 +65,14 @@ public class Cancer extends Cell{
     }
 
     @Override
-    protected synchronized void addChildCell() throws OutOfSpaceException{
-        Cell addedCell = null;
-        for(int i = 0; i < 1000; i++) {
-            addedCell = new Cancer(radius, this);
-            if (newCellList.stream().anyMatch(addedCell::isOverlapping)) addedCell = null;
-            else break;
-        }
-        if (addedCell == null) throw new OutOfSpaceException("Child cell no spawn me cry");
-        newCellList.add(addedCell);
+    protected Cell createChild() throws OutOfSpaceException {
+        return new Cancer(radius, this);
+    }
+
+    @Override
+    public boolean thatsMySPOT() {
+        if (x <= radius || x >= xSize-radius) return false;
+        if (y <= radius || y >= ySize-radius) return false;
+        return true;
     }
 }

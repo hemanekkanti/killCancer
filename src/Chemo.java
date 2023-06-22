@@ -5,6 +5,8 @@ public class Chemo extends Particle{
 
     private int pulseTimer = -1;
 
+    private int lifetime_remaining = (int) rand.nextGaussian(500, 300);
+
     public Chemo(double radius) throws OutOfSpaceException {
         super(radius);
     }
@@ -13,7 +15,7 @@ public class Chemo extends Particle{
     }
 
     @Override
-    protected void randomizePosition() {
+    protected void spawnParticle() {
         x=5;
         y = ySize / 2;
     }
@@ -34,7 +36,8 @@ public class Chemo extends Particle{
     @Override
     public void move() {
         super.move();
-        if (x >= xSize) killSelf();
+        if (!isInsideVessel()) lifetime_remaining--;
+        if (x >= xSize || lifetime_remaining == 0) killSelf();
         if (rand.nextDouble()>0.995) killSelf();
     }
 
@@ -47,6 +50,7 @@ public class Chemo extends Particle{
             return super.drawRadius();
         }
         return (int) (radius + 50 * Math.sin(Math.PI * ((pulseTimer-1) / 30.0)));
+
     }
 
     public static void injectDrugs(int n) {

@@ -13,8 +13,8 @@ public class Simulation {
         Random rand = new Random();
 
         double radius = 15;
-        int ncells = 0;
-        int ncancer = 20;
+        int ncells = 20;
+        int ncancer = 1;
         int ndrugs = 0;
         int chemoInjectionQuant = 100;
         double thickness = 150;
@@ -70,7 +70,7 @@ public class Simulation {
             ndrugs = drugs.size();
 
             //chemo dosage
-            if(ncancer>4 && ndrugs < chemoInjectionQuant / 20) Chemo.injectDrugs(chemoInjectionQuant);
+            if(ncancer>4 && ndrugs < 0.08 * chemoInjectionQuant) Chemo.injectDrugs(chemoInjectionQuant);
             drugs.forEach(chemo -> {
                 chemo.move();
                 cells.stream().filter(Cell::vulnerableToChemo).filter(chemo::isOverlapping).forEach(c -> {

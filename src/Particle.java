@@ -21,6 +21,7 @@ public class Particle {
     protected static double lowerEdge;
     protected static double upperEdge;
     protected boolean gravestone;
+    private Particle parent;
 
     private int framesSinceSpawn;
 
@@ -30,6 +31,14 @@ public class Particle {
 
     public Particle(double radius) throws OutOfSpaceException {
         this.radius = radius;
+        //this.colour = colour;
+        spawnParticle();
+        randomizeDirection();
+    }
+
+    public Particle(double radius, Particle parent) throws OutOfSpaceException {
+        this.radius = radius;
+        this.parent = parent;
         //this.colour = colour;
         spawnParticle();
         randomizeDirection();
@@ -63,10 +72,10 @@ public class Particle {
         return (onLowerEdge() || onUpperEdge());
     }
     private boolean onLowerEdge(){
-        return (y <= lowerEdge && y >= lowerEdge-radius);
+        return (y <= lowerEdge+radius && y >= lowerEdge-radius);
     }
     private boolean onUpperEdge(){
-        return (y >= upperEdge && y <= upperEdge+radius);
+        return (y >= upperEdge-radius && y <= upperEdge+radius);
     }
 
     public void bounceVessel() {
@@ -97,18 +106,36 @@ public class Particle {
         }
     }
 
-    private void spawnParticle() throws OutOfSpaceException {
+    protected void spawnParticle() throws OutOfSpaceException {
         for (int tries = 0; tries<100; tries++) {
             randomizePosition();
-            if (restrain.stream().noneMatch(this::isOverlapping)) return;
+            if (restrain.stream().noneMatch(this::isOverlapping) ) return;
         }
-        throw new OutOfSpaceException("Particle could not be spawned :'(");
+        throw new OutOfSpaceException("Particle could not be spawned without overlapping :'(");
     }
 
-    protected void randomizePosition() {
-        x = rand.nextDouble(radius, xSize - radius);
-        boolean chance = rand.nextBoolean();
-        y = chance ? rand.nextDouble(radius, lowerEdge-radius) : rand.nextDouble(upperEdge+radius, ySize - radius);
+    protected void randomizePosition() throws OutOfSpaceException {
+        if (parent == null) {
+            x = rand.nextDouble(radius, xSize - radius);
+            boolean chance = rand.nextBoolean();
+            y = chance ? rand.nextDouble(radius, lowerEdge - radius) : rand.nextDouble(upperEdge + radius, ySize - radius);
+        } else {
+            int i;
+            for (i = 0; i < 120; i++) {
+                double theta = rand.nextDouble(Math.PI * 2);
+                x = parent.x + Math.cos(theta) * (parent.radius + this.radius + 1);
+                y = parent.y + Math.sin(theta) * (parent.radius + this.radius + 1);
+                if (thatsMySPOT()) break;
+            }
+            if (i == 120) throw new OutOfSpaceException("Particle could not be spawned even before overlapping :'(");
+        }
+    }
+
+    public boolean thatsMySPOT() {
+        if (x <= radius || x >= xSize-radius) return false;
+        if (y <= radius || y >= ySize-radius) return false;
+        if (isInsideVessel() || onOuterEdge()) return false;
+        return true;
     }
 
     protected void randomizeDirection() {
