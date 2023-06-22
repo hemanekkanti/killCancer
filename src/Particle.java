@@ -103,7 +103,7 @@ public class Particle {
         }
     }
 
-    private void spawnParticle() throws OutOfSpaceException {
+    protected void spawnParticle() throws OutOfSpaceException {
         for (int tries = 0; tries<100; tries++) {
             randomizePosition();
             if (restrain.stream().noneMatch(this::isOverlapping) ) return;

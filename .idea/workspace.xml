@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4f69faf-9453-4b61-9000-bbb97a9535bc" name="Changes" comment="bro">
+    <list default="true" id="f4f69faf-9453-4b61-9000-bbb97a9535bc" name="Changes" comment="kanker g2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Cancer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cancer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Chemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Chemo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Particle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Particle.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -121,7 +120,21 @@
       <option name="project" value="LOCAL" />
       <updated>1687375011010</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="parent spawning + cancer probaboilities">
+      <created>1687395819425</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1687395819425</updated>
+    </task>
+    <task id="LOCAL-00007" summary="kanker g2">
+      <created>1687395871460</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1687395871460</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -130,6 +143,8 @@
     <MESSAGE value="bouncy bouncy and initialized chemo :D" />
     <MESSAGE value="giiiitiiiignoooor" />
     <MESSAGE value="bro" />
-    <option name="LAST_COMMIT_MESSAGE" value="bro" />
+    <MESSAGE value="parent spawning + cancer probaboilities" />
+    <MESSAGE value="kanker g2" />
+    <option name="LAST_COMMIT_MESSAGE" value="kanker g2" />
   </component>
 </project>
