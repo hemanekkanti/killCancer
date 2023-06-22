@@ -3,8 +3,6 @@ import java.util.List;
 public class Chemo extends Particle{
     public static List<Chemo> drugsList;
 
-    private int pulseTimer = -1;
-
     private int lifetime_remaining = (int) rand.nextInt(500, 800);
 
     public Chemo(double radius) throws OutOfSpaceException {
@@ -40,18 +38,6 @@ public class Chemo extends Particle{
         if (x >= xSize || lifetime_remaining <= 0) killSelf();
     }
 
-    @Override
-    protected int radiusToDraw() {
-
-        if (pulseTimer == -1) return super.radiusToDraw();
-        if (pulseTimer++ >= 30) {
-            pulseTimer = -1;
-            return super.radiusToDraw();
-        }
-        return (int) (radius + 50 * Math.sin(Math.PI * ((pulseTimer-1) / 30.0)));
-
-    }
-
     public static void injectDrugs(int n) {
         for(int i=0; i<n; i++) {
             try {
@@ -68,6 +54,4 @@ public class Chemo extends Particle{
 
     @Override
     public void bounceVessel(){}
-
-    public void pulsate() {if (pulseTimer == -1) pulseTimer = 0;}
 }
