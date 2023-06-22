@@ -42,7 +42,7 @@ public class Cancer extends Cell{
                 addChildCell();
             } catch (OutOfSpaceException e) {
                 phase = cellPhase.G2;
-                t=120;
+                t=90;
             }
         }
         phases();
