@@ -16,16 +16,15 @@ public class Simulation {
         int ncells = 20;
         int ncancer = 1;
         int ndrugs = 0;
-        int chemoInjectionQuant = 500;
+        int chemoInjectionQuant = 5000;
         double thickness = 150;
         double lowerEdge = (ySize-thickness)/2 ;
-        double upperEdge = (ySize+thickness)/2 ;
 
         //setting the static variables
-        Particle.setDimensions(xSize,ySize, lowerEdge, upperEdge);
+        Particle.setDimensions(xSize,ySize, lowerEdge, thickness);
         Particle.setPen(pen);
         BloodVessel bloodstream = new BloodVessel(pen);
-        BloodVessel.setDimensions(thickness, lowerEdge, upperEdge, xSize);
+        BloodVessel.setDimensions(thickness, lowerEdge, xSize);
 
         //making the lists
         List<Cell> cells = new ArrayList<>(ncells + ncancer);

@@ -5,7 +5,6 @@ import java.util.Random;
 public class BloodVessel {
     private static int thickness;
     private static double lowerEdge;
-    private static double upperEdge;
     private static int xSize;
     private static Pen pen;
     private static final Random rand = new Random();
@@ -16,10 +15,9 @@ public class BloodVessel {
         setColour();
     }
 
-    public static void setDimensions(double thickness, double lowerEdge, double upperEdge, int xSize){
+    public static void setDimensions(double thickness, double lowerEdge, int xSize){
         BloodVessel.thickness = (int) thickness;
         BloodVessel.lowerEdge = lowerEdge;
-        BloodVessel.upperEdge = upperEdge;
         BloodVessel.xSize = xSize;
     }
 
