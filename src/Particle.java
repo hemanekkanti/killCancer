@@ -7,6 +7,8 @@ import java.util.Random;
 import static java.lang.Math.abs;
 
 public class Particle {
+
+    private static double ANIMATION_TIME = 20;
     protected double radius;
     private Color colour;
     protected static Pen pen;
@@ -160,15 +162,26 @@ public class Particle {
 
     protected int drawRadius() {
         if (framesSinceSpawn == -1) return (int) radius;
-        if (framesSinceSpawn > 50) {
+        if (framesSinceSpawn > ANIMATION_TIME) {
             framesSinceSpawn = -1;
             return drawRadius();
         }
-        return (int) (radius * (framesSinceSpawn++ / 50.0));
+        return (int) (radius * ( ANIMATION_TIME / ++framesSinceSpawn));
+    }
+
+    protected int drawX() {
+        if (framesSinceSpawn == -1 || parent == null) return (int) x;
+        double factor = (framesSinceSpawn / ANIMATION_TIME);
+        return (int) (x * factor + parent.x * (1 - factor));
+    }
+    protected int drawY() {
+        if (framesSinceSpawn == -1 || parent == null) return (int) y;
+        double factor = (framesSinceSpawn / ANIMATION_TIME);
+        return (int) (y * factor + parent.y * (1 - factor));
     }
 
     public void draw(){
-        pen.drawCircle((int)x,(int)y, drawRadius(),Color.WHITE, true);
+        pen.drawCircle(drawX(),drawY(), drawRadius(),Color.WHITE, true);
     }
 
     public static class OutOfSpaceException extends Exception{
