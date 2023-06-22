@@ -38,7 +38,6 @@ public class Chemo extends Particle{
         super.move();
         if (!isInsideVessel()) lifetime_remaining--;
         if (x >= xSize || lifetime_remaining == 0) killSelf();
-        if (rand.nextDouble()>0.995) killSelf();
     }
 
     @Override
