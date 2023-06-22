@@ -7,8 +7,7 @@ import static java.lang.Math.abs;
 
 public class Particle {
     protected double radius;
-    private static final double ANIMATION_TIME = 80;
-    private Color colour;
+    private static final double ANIMATION_TIME = 30;
     protected static Pen pen;
     protected double x;
     protected double y;
@@ -151,13 +150,13 @@ public class Particle {
     }
     public void draw(){
         pen.drawCircle(XtoDraw(), YtoDraw(), radiusToDraw(),Color.WHITE, true);
+        animationProgress();
     }
     protected void animationProgress(){
         if (animationPhase==-1) return;
         if(++animationPhase >= ANIMATION_TIME) animationPhase = -1;
     }
     protected double getAnimationRatio(){
-        animationProgress();
         if (animationPhase==-1) return 1;
         return (animationPhase/ANIMATION_TIME);
     }

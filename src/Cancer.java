@@ -57,14 +57,15 @@ public class Cancer extends Cell{
         int numSpikes = 12;
         for(int i=0; i<numSpikes; i++){
             double theta = i*(2*Math.PI/numSpikes);
-            double x2 = x+1.2*radius * Math.cos(theta);
-            double y2 = y+1.2*radius * Math.sin(theta);
-            pen.drawLine((int)x,(int)y,(int)x2,(int)y2,Color.WHITE);
+            int x2 = (int)(XtoDraw()+1.2*radiusToDraw() * Math.cos(theta));
+            int y2 = (int) (YtoDraw()+1.2*radiusToDraw() * Math.sin(theta));
+            pen.drawLine(XtoDraw(),YtoDraw(), x2, y2, Color.WHITE);
         }
 
         //inner nucleus
-        int innerR = (int) (radiusToDraw()/radius*innerRadius);
+        int innerR = (int) (innerRadius * radiusToDraw()/radius);
         pen.drawCircle(XtoDraw(),YtoDraw(),innerR, colour, true);
+        animationProgress();
     }
 
     @Override
