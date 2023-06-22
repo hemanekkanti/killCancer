@@ -5,7 +5,6 @@ public class Chemo extends Particle{
 
     private int pulseTimer = -1;
 
-    private int lifetime_remaining = (int) rand.nextGaussian(500, 300);
     private int lifetime_remaining = (int) rand.nextInt(500, 800);
 
     public Chemo(double radius) throws OutOfSpaceException {
@@ -42,12 +41,12 @@ public class Chemo extends Particle{
     }
 
     @Override
-    protected int drawRadius() {
+    protected int radiusToDraw() {
 
-        if (pulseTimer == -1) return super.drawRadius();
+        if (pulseTimer == -1) return super.radiusToDraw();
         if (pulseTimer++ >= 30) {
             pulseTimer = -1;
-            return super.drawRadius();
+            return super.radiusToDraw();
         }
         return (int) (radius + 50 * Math.sin(Math.PI * ((pulseTimer-1) / 30.0)));
 

@@ -23,7 +23,7 @@ public class Particle {
     protected boolean gravestone;
     private Particle parent;
 
-    private int framesSinceSpawn;
+    private int animationPhase;
 
     private static List<? extends Particle> restrain;
 
