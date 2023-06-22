@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.incrementExact;
 
 public class Particle {
     protected double radius;
@@ -140,6 +141,7 @@ public class Particle {
         if (!gravestone) {
             dx = rand.nextDouble(-2, 2);
             dy = rand.nextDouble(-2, 2);
+            if (isInsideVessel()) dx += 1;
         } else {
             dx = 5*Math.sin(8*Math.PI*y/ySize);
             dy += 0.1;

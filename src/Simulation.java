@@ -6,30 +6,34 @@ import java.util.ArrayList;
 import java.util.Random;
 public class Simulation {
     public Simulation() {
-        int xSize = 1000;
-        int ySize = 700;
-        Canvas screen = new Canvas(xSize, ySize, 150, 50);
+        final int SCREEN_X = 1000;
+        final int SCREEN_Y = 700;
+        final double RADIUS = 15;
+        final int INITIAL_CELLS = 0;
+        final int INITIAL_CANCER = 1;
+        final int CHEMO_INJECTION = 500;
+        final double VEIN_THICKNESS = 300;
+
+        Canvas screen = new Canvas(SCREEN_X, SCREEN_Y, 150, 50);
         Pen pen = new Pen(screen);
         Random rand = new Random();
 
-        double radius = 15;
-        int ncells = 20;
-        int ncancer = 1;
-        int ndrugs = 0;
-        int chemoInjectionQuant = 500;
-        double thickness = 400;
-        double lowerEdge = (ySize-thickness)/2 ;
+        int ncells;
+        int ncancer;
+        int ndrugs;
+
+        double lowerEdge = (SCREEN_Y-VEIN_THICKNESS)/2 ;
 
         //setting the static variables
-        Particle.setDimensions(xSize,ySize);
+        Particle.setDimensions(SCREEN_X,SCREEN_Y);
         Particle.setPen(pen);
         BloodVessel bloodstream = new BloodVessel(pen);
-        BloodVessel.setDimensions(thickness, lowerEdge, xSize);
+        BloodVessel.setDimensions(VEIN_THICKNESS, lowerEdge, SCREEN_X);
 
         //making the lists
-        List<Cell> cells = new ArrayList<>(ncells + ncancer);
+        List<Cell> cells = new ArrayList<>(INITIAL_CELLS + INITIAL_CANCER);
         List<Cell> newCells = new ArrayList<>();
-        List<Chemo> drugs = new ArrayList<>(chemoInjectionQuant);
+        List<Chemo> drugs = new ArrayList<>((CHEMO_INJECTION * 3)/2);
 
         //setting the static lists
         Cell.setNewCellList(newCells);
@@ -39,19 +43,19 @@ public class Simulation {
 
         int t = 0;
 
-        try {
-            for (int i = 0; i < ncells; i++) cells.add(new Cell(radius));
-            for (int i = 0; i < ncancer; i++) cells.add(new Cancer(radius));
-        } catch (Particle.OutOfSpaceException s) {
-            throw new RuntimeException(s);
-        }
-
         int flowrate=0;
 
         while(true) {
             //drawBloodvessel
             bloodstream.draw();
             bloodstream.flow(flowrate);
+
+            if (t == 50) { try {
+                for (int i = 0; i < INITIAL_CELLS; i++) cells.add(new Cell(RADIUS));
+                for (int i = 0; i < INITIAL_CANCER; i++) cells.add(new Cancer(RADIUS));
+            } catch (Particle.OutOfSpaceException s) {
+                throw new RuntimeException(s);
+            }}
 
             //move cells all the while bouncing them properly within the space
             newCells.clear();
@@ -75,7 +79,7 @@ public class Simulation {
             ndrugs = drugs.size();
 
             //chemo dosage
-            if(ncancer>4 && ndrugs < 0.08 * chemoInjectionQuant) Chemo.injectDrugs(chemoInjectionQuant);
+            if(ncancer>4 && ndrugs < 0.08 * CHEMO_INJECTION) Chemo.injectDrugs(CHEMO_INJECTION);
             drugs.forEach(chemo -> {
                 chemo.move();
                 //cells.stream().filter(Cell::vulnerableToChemo).filter(chemo::isOverlapping).forEach(Cell::killSelf);
@@ -86,12 +90,13 @@ public class Simulation {
                 chemo.draw();
             });
             drugs.removeIf(Chemo::mustDie);
-            pen.drawString(5, 5, Color.WHITE, "cell count:"+cells.size());
+            pen.drawString(5, 5, Color.WHITE, "cell count:"+ncells);
 
             screen.update();
             screen.pause(10);
             screen.clear();
             t++;
+
             if( flowrate ++ >= 250) flowrate = 0;
         }
     }
