@@ -143,8 +143,8 @@ public class Particle {
             dx = rand.nextDouble(-2, 2);
             dy = rand.nextDouble(-2, 2);
         } else {
-            dx = 0;
-            dy -= 0.1;
+            dx = 5*Math.sin(8*Math.PI*y/ySize);
+            dy += 0.1;
         }
     }
 
