@@ -149,7 +149,7 @@ public class Particle {
         else return false;
     }
     public void draw(){
-        pen.drawCircle(XtoDraw(), YtoDraw(), radiusToDraw(),Color.WHITE, true);
+        pen.drawCircle(XtoDraw(), YtoDraw(), radiusToDraw(),new Color(1f,1f,1f,0.5f), true);
         animationProgress();
     }
     protected void animationProgress(){

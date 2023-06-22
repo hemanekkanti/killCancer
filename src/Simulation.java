@@ -16,7 +16,7 @@ public class Simulation {
         int ncells = 20;
         int ncancer = 1;
         int ndrugs = 0;
-        int chemoInjectionQuant = 100;
+        int chemoInjectionQuant = 500;
         double thickness = 150;
         double lowerEdge = (ySize-thickness)/2 ;
         double upperEdge = (ySize+thickness)/2 ;
@@ -79,7 +79,11 @@ public class Simulation {
             if(ncancer>4 && ndrugs < 0.08 * chemoInjectionQuant) Chemo.injectDrugs(chemoInjectionQuant);
             drugs.forEach(chemo -> {
                 chemo.move();
-                cells.stream().filter(Cell::vulnerableToChemo).filter(chemo::isOverlapping).forEach(Cell::killSelf);
+                //cells.stream().filter(Cell::vulnerableToChemo).filter(chemo::isOverlapping).forEach(Cell::killSelf);
+                cells.stream().filter(Cell::vulnerableToChemo).filter(chemo::isOverlapping).findAny().ifPresent( c -> {
+                    c.killSelf();
+                    chemo.killSelf();
+                });
                 chemo.draw();
             });
             drugs.removeIf(Chemo::mustDie);
