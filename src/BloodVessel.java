@@ -1,26 +1,59 @@
 
 import java.awt.Color;
 import nano.*;
+
+import java.util.Arrays;
 import java.util.Random;
 public class BloodVessel {
     private static int thickness;
     private static double lowerEdge;
-    private static double upperEdge;
     private static int xSize;
     private static Pen pen;
     private static final Random rand = new Random();
     private static Color colour;
+
+    private static class Blob extends Particle {
+
+        private static Blob[] blobs;
+        private Color color = new Color(1f,0.5f,0.5f,0.15f);
+
+        private double v = rand.nextDouble(1,3);
+
+        public Blob(double radius) throws OutOfSpaceException {super(radius);}
+        public static void makeBlobs(int n, double size) {
+            blobs = new Blob[n];
+            for (int j = 0; j<blobs.length; j++) {
+                try {blobs[j] = new Blob(rand.nextDouble(size, size*2));} catch (Exception e) {e.printStackTrace();}
+            }
+        }
+        public static void drawBlobs() {for (int i = 0; i< blobs.length; i++){blobs[i].draw();}}
+        @Override
+        protected void spawnParticle() {
+            x = rand.nextDouble(-radius, xSize+radius);
+            y = rand.nextDouble(lowerEdge+radius, lowerEdge+thickness-radius);
+        }
+        @Override
+        public void move() {
+            x+=v;
+            if (x - radius > xSize) x = -radius;
+        }
+        @Override
+        public void draw() {
+            pen.drawCircle((int)x, (int)y, (int)radius, color, true);
+            move();
+        }
+    }
 
     public BloodVessel(Pen pen){
         BloodVessel.pen = pen;
         setColour();
     }
 
-    public static void setDimensions(double thickness, double lowerEdge, double upperEdge, int xSize){
+    public static void setDimensions(double thickness, double lowerEdge, int xSize){
         BloodVessel.thickness = (int) thickness;
         BloodVessel.lowerEdge = lowerEdge;
-        BloodVessel.upperEdge = upperEdge;
         BloodVessel.xSize = xSize;
+        Blob.makeBlobs(100, 10);
     }
 
     public void draw(){
@@ -35,6 +68,7 @@ public class BloodVessel {
                 pen.drawRectangle(i + 4, (int) lowerEdge, 4, thickness, redShade, true);
             }
         }
+        Blob.drawBlobs();
     }
     private Color generateRedHue(int i, int flowrate){
         float h = 0;

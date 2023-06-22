@@ -14,7 +14,7 @@ public class Particle {
     protected double y;
     protected double dx;
     protected double dy;
-    protected final Random rand = new Random();
+    protected final static Random rand = new Random();
     protected static double xSize;
     protected static double ySize;
     protected int t;
@@ -43,11 +43,11 @@ public class Particle {
         spawnParticle();
         randomizeDirection();
     }
-    public static void setDimensions(double xsize, double ysize, double lowerEdge, double upperEdge) {
+    public static void setDimensions(double xsize, double ysize, double lowerEdge, double thickness) {
         Particle.xSize = xsize;
         Particle.ySize = ysize;
         Particle.lowerEdge = lowerEdge;
-        Particle.upperEdge = upperEdge;
+        Particle.upperEdge = lowerEdge+thickness;
     }
 
     public static void setPen(Pen pen) {
