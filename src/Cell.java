@@ -19,9 +19,8 @@ public class Cell extends Particle{
         phases();
     }
 
-    private Cell(double radius, Cell parent) throws OutOfSpaceException {
-        super(radius);
-        // set position according to parent?
+    protected Cell(double radius, Cell parent) throws OutOfSpaceException {
+        super(radius, parent);
         phase = cellPhase.G1;
         phases();
     }
@@ -92,10 +91,14 @@ public class Cell extends Particle{
         phases();
     }
 
+    protected Cell createChild() throws OutOfSpaceException {
+        return new Cell(radius, this);
+    }
+
     protected synchronized void addChildCell() throws OutOfSpaceException{
         Cell addedCell = null;
         for(int i = 0; i < 1000; i++) {
-            addedCell = new Cell(radius, this);
+            addedCell = createChild();
             if (newCellList.stream().anyMatch(addedCell::isOverlapping)) addedCell = null;
             else break;
         }
