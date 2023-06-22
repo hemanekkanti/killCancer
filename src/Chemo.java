@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Random;
 
 public class Chemo extends Particle{
     public static List<Chemo> drugsList;
@@ -15,7 +16,7 @@ public class Chemo extends Particle{
     @Override
     protected void spawnParticle() {
         x=5;
-        y = ySize / 2;
+        y = rand.nextDouble(BloodVessel.getLowerEdge()+radius, BloodVessel.getUpperEdge()-radius);
     }
 
     @Override
@@ -24,7 +25,8 @@ public class Chemo extends Particle{
         dy = rand.nextDouble(-8, 8);
         if (isInsideVessel()) {
             dx += 2;
-            dy *= 1 - (x/(xSize*2));
+            // not needed; distribution is now more even
+            //dy *= 1 - (x/(xSize*2));
         } else {
             if (y < ySize/2) dy -= 0.5;
             else dy += 0.5;

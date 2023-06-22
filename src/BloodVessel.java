@@ -6,6 +6,14 @@ import java.util.Arrays;
 import java.util.Random;
 public class BloodVessel {
     private static int thickness;
+
+    public static double getUpperEdge() {
+        return (lowerEdge+thickness);
+    }
+    public static double getLowerEdge() {
+        return lowerEdge;
+    }
+
     private static double lowerEdge;
     private static int xSize;
     private static Pen pen;
@@ -15,9 +23,9 @@ public class BloodVessel {
     private static class Blob extends Particle {
 
         private static Blob[] blobs;
-        private Color color = new Color(1f,0.5f,0.5f,0.15f);
+        private final Color color = new Color(1f,0.5f,0.5f,rand.nextFloat(0.1f, 0.2f));
 
-        private double v = rand.nextDouble(1,3);
+        private final double v = rand.nextDouble(1,3);
 
         public Blob(double radius) throws OutOfSpaceException {super(radius);}
         public static void makeBlobs(int n, double size) {

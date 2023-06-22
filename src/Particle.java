@@ -17,8 +17,6 @@ public class Particle {
     protected final static Random rand = new Random();
     protected static double xSize;
     protected static double ySize;
-    protected static double lowerEdge;
-    protected static double upperEdge;
     protected boolean gravestone;
     private Particle parent;
 
@@ -42,11 +40,9 @@ public class Particle {
         spawnParticle();
         randomizeDirection();
     }
-    public static void setDimensions(double xsize, double ysize, double lowerEdge, double thickness) {
+    public static void setDimensions(double xsize, double ysize) {
         Particle.xSize = xsize;
         Particle.ySize = ysize;
-        Particle.lowerEdge = lowerEdge;
-        Particle.upperEdge = lowerEdge+thickness;
     }
 
     public static void setPen(Pen pen) {
@@ -66,22 +62,24 @@ public class Particle {
         y -= dy;
     }
 
-    protected boolean isInsideVessel(){ return y > lowerEdge+radius && y < upperEdge-radius; }
+    protected boolean isInsideVessel(){
+        return y > BloodVessel.getLowerEdge()+radius && y < BloodVessel.getUpperEdge()-radius;
+    }
     private boolean onOuterEdge(){
         return (onLowerEdge() || onUpperEdge());
     }
     private boolean onLowerEdge(){
-        return (y <= lowerEdge+radius && y >= lowerEdge-radius);
+        return (y <= BloodVessel.getLowerEdge()+radius && y >= BloodVessel.getLowerEdge()-radius);
     }
     private boolean onUpperEdge(){
-        return (y >= upperEdge-radius && y <= upperEdge+radius);
+        return (y >= BloodVessel.getUpperEdge()-radius && y <= BloodVessel.getUpperEdge()+radius);
     }
 
     public void bounceVessel() {
         if(onOuterEdge() && !(this instanceof Cancer) && !gravestone){
             dy = -dy;
-            if(onLowerEdge()) y=lowerEdge-radius;
-            else y=upperEdge+radius;
+            if(onLowerEdge()) y=BloodVessel.getLowerEdge()-radius;
+            else y=BloodVessel.getUpperEdge()+radius;
         }
     }
 
@@ -117,7 +115,8 @@ public class Particle {
         if (parent == null) {
             x = rand.nextDouble(radius, xSize - radius);
             boolean chance = rand.nextBoolean();
-            y = chance ? rand.nextDouble(radius, lowerEdge - radius) : rand.nextDouble(upperEdge + radius, ySize - radius);
+            y = chance ? rand.nextDouble(radius, BloodVessel.getLowerEdge() - radius) :
+                    rand.nextDouble(BloodVessel.getUpperEdge() + radius, ySize - radius);
         } else {
             int i;
             for (i = 0; i < 120; i++) {

@@ -17,11 +17,11 @@ public class Simulation {
         int ncancer = 1;
         int ndrugs = 0;
         int chemoInjectionQuant = 500;
-        double thickness = 150;
+        double thickness = 400;
         double lowerEdge = (ySize-thickness)/2 ;
 
         //setting the static variables
-        Particle.setDimensions(xSize,ySize, lowerEdge, thickness);
+        Particle.setDimensions(xSize,ySize);
         Particle.setPen(pen);
         BloodVessel bloodstream = new BloodVessel(pen);
         BloodVessel.setDimensions(thickness, lowerEdge, xSize);
