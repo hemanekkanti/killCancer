@@ -3,7 +3,7 @@ import java.util.List;
 public class Chemo extends Particle{
     public static List<Chemo> drugsList;
 
-    private int lifetime_remaining = (int) rand.nextGaussian(500, 300);
+    private int lifetime_remaining = (int) rand.nextInt(500, 800);
 
     public Chemo(double radius) throws OutOfSpaceException {
         super(radius);

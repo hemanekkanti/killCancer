@@ -1,6 +1,5 @@
 import java.awt.Color;
 import nano.*;
-
 import java.util.List;
 import java.util.Random;
 
@@ -8,6 +7,7 @@ import static java.lang.Math.abs;
 
 public class Particle {
     protected double radius;
+    private static final double ANIMATION_TIME = 80;
     private Color colour;
     protected static Pen pen;
     protected double x;
@@ -22,6 +22,7 @@ public class Particle {
     protected static double upperEdge;
     protected boolean gravestone;
     private Particle parent;
+    private int animationPhase;
 
     private static List<? extends Particle> restrain;
 
@@ -149,7 +150,27 @@ public class Particle {
         else return false;
     }
     public void draw(){
-        pen.drawCircle((int)x,(int)y,(int) radius,Color.WHITE, true);
+        pen.drawCircle(XtoDraw(), YtoDraw(), radiusToDraw(),Color.WHITE, true);
+    }
+    protected void animationProgress(){
+        if (animationPhase==-1) return;
+        if(++animationPhase >= ANIMATION_TIME) animationPhase = -1;
+    }
+    protected double getAnimationRatio(){
+        animationProgress();
+        if (animationPhase==-1) return 1;
+        return (animationPhase/ANIMATION_TIME);
+    }
+    protected int radiusToDraw(){
+        return (int) (radius*getAnimationRatio());
+    }
+    protected int XtoDraw(){
+        if (animationPhase==-1 || parent==null) return (int) x;
+        return (int) (parent.x+(x-parent.x)*getAnimationRatio());
+    }
+    protected int YtoDraw(){
+        if (animationPhase==-1 || parent==null) return (int) y;
+        return (int) (parent.y+(y-parent.y)*getAnimationRatio());
     }
 
     public static class OutOfSpaceException extends Exception{

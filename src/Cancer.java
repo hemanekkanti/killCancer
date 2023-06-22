@@ -51,7 +51,9 @@ public class Cancer extends Cell{
     @Override
     public void draw(){
         //changePhase(); // moved to simulation
-        pen.drawCircle((int)x,(int)y,(int)radius, Color.WHITE, false);
+        pen.drawCircle(XtoDraw(),YtoDraw(),radiusToDraw(), Color.WHITE, false);
+
+        //spikes for the cancer cells
         int numSpikes = 12;
         for(int i=0; i<numSpikes; i++){
             double theta = i*(2*Math.PI/numSpikes);
@@ -59,7 +61,10 @@ public class Cancer extends Cell{
             double y2 = y+1.2*radius * Math.sin(theta);
             pen.drawLine((int)x,(int)y,(int)x2,(int)y2,Color.WHITE);
         }
-        pen.drawCircle((int)x,(int)y,(int) innerRadius, colour, true);
+
+        //inner nucleus
+        int innerR = (int) (radiusToDraw()/radius*innerRadius);
+        pen.drawCircle(XtoDraw(),YtoDraw(),innerR, colour, true);
     }
 
     @Override
