@@ -17,7 +17,6 @@ public class Particle {
     protected final static Random rand = new Random();
     protected static double xSize;
     protected static double ySize;
-    protected int t;
     protected static double lowerEdge;
     protected static double upperEdge;
     protected boolean gravestone;

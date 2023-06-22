@@ -6,11 +6,10 @@ import java.util.Random;
 public class Cell extends Particle{
     protected Color colour = Color.BLUE;
     protected double innerRadius;
-    protected final Random rand = new Random();
     protected cellPhase phase;
     protected static List<Cell> newCellList;
     public static void setNewCellList(List<Cell> l) {newCellList = l;}
-    int t;
+    protected int t;
     private int numberOfdivisions;
 
     public Cell(double radius) throws OutOfSpaceException {

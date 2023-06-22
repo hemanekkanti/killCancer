@@ -16,7 +16,7 @@ public class Simulation {
         int ncells = 20;
         int ncancer = 1;
         int ndrugs = 0;
-        int chemoInjectionQuant = 100;
+        int chemoInjectionQuant = 500;
         double thickness = 150;
         double lowerEdge = (ySize-thickness)/2 ;
 
