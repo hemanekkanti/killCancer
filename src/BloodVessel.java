@@ -31,7 +31,7 @@ public class BloodVessel {
         for (int i = 0; i < xSize; i++) {
             Color redShade = generateRedHue(i, freq);
             if (i % 8 == 0) {
-                pen.drawRectangle(i, (int) lowerEdge, 4, thickness, Color.BLACK, true);
+                pen.drawRectangle(i, (int) lowerEdge, 4, thickness, redShade.darker(), true);
                 pen.drawRectangle(i + 4, (int) lowerEdge, 4, thickness, redShade, true);
             }
         }

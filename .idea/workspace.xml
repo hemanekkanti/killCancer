@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4f69faf-9453-4b61-9000-bbb97a9535bc" name="Changes" comment="fix merge problems">
+    <list default="true" id="f4f69faf-9453-4b61-9000-bbb97a9535bc" name="Changes" comment="fix duplicate chemo lifetime">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Cancer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cancer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cell.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Particle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Particle.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,6 +23,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="EFFECTSSSS" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
@@ -39,9 +47,9 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;EFFECTSSSS&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/hemanekkanti/Library/CloudStorage/OneDrive-DelftUniversityofTechnology/Biomolecular Programming 2023/Chemo and Cancer/nano.jar!/nano&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -70,7 +78,6 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JAR Application.nano.jar" />
         <item itemvalue="JAR Application.nano.jar" />
       </list>
     </recent_temporary>
@@ -133,33 +140,8 @@
       <option name="project" value="LOCAL" />
       <updated>1687395871460</updated>
     </task>
-    <task id="LOCAL-00008" summary="fix duplicate chemo lifetime">
-      <created>1687396874804</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1687396874804</updated>
-    </task>
-    <task id="LOCAL-00009" summary="fix merge problems">
-      <created>1687457489186</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1687457489186</updated>
-    </task>
-    <option name="localTasksCounter" value="10" />
+    <option name="localTasksCounter" value="8" />
     <servers />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="horrible bounce version" />
@@ -169,8 +151,6 @@
     <MESSAGE value="bro" />
     <MESSAGE value="parent spawning + cancer probaboilities" />
     <MESSAGE value="kanker g2" />
-    <MESSAGE value="fix duplicate chemo lifetime" />
-    <MESSAGE value="fix merge problems" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix merge problems" />
+    <option name="LAST_COMMIT_MESSAGE" value="kanker g2" />
   </component>
 </project>
