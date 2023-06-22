@@ -162,22 +162,25 @@ public class Particle {
 
     protected int drawRadius() {
         if (framesSinceSpawn == -1) return (int) radius;
-        if (framesSinceSpawn > ANIMATION_TIME) {
+        if (framesSinceSpawn++ > ANIMATION_TIME) {
             framesSinceSpawn = -1;
             return drawRadius();
         }
-        return (int) (radius * (framesSinceSpawn++ / ANIMATION_TIME));
+        // if (parent != null) return (int) radius; // uncomment to disable blow up for mitosis
+        return (int) (radius * getAnimationRatio());
+    }
+
+    private double getAnimationRatio() {
+        return (framesSinceSpawn - 1) / ANIMATION_TIME;
     }
 
     protected int drawX() {
         if (framesSinceSpawn == -1 || parent == null) return (int) x;
-        double factor = (framesSinceSpawn / ANIMATION_TIME);
-        return (int) (x * factor + parent.x * (1 - factor));
+        return (int) (x * getAnimationRatio() + parent.x * (1 - getAnimationRatio()));
     }
     protected int drawY() {
         if (framesSinceSpawn == -1 || parent == null) return (int) y;
-        double factor = (framesSinceSpawn / ANIMATION_TIME);
-        return (int) (y * factor + parent.y * (1 - factor));
+        return (int) (y * getAnimationRatio() + parent.y * (1 - getAnimationRatio()));
     }
 
     public void draw(){
