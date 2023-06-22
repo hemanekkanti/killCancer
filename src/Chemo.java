@@ -6,6 +6,7 @@ public class Chemo extends Particle{
     private int pulseTimer = -1;
 
     private int lifetime_remaining = (int) rand.nextGaussian(500, 300);
+    private int lifetime_remaining = (int) rand.nextInt(500, 800);
 
     public Chemo(double radius) throws OutOfSpaceException {
         super(radius);

@@ -7,10 +7,8 @@ import java.util.Random;
 import static java.lang.Math.abs;
 
 public class Particle {
-
-    private static double ANIMATION_TIME = 20;
     protected double radius;
-    private Color colour;
+    private static final double ANIMATION_TIME = 30;
     protected static Pen pen;
     protected double x;
     protected double y;
@@ -159,32 +157,28 @@ public class Particle {
         if (p!=this) return separationDistance(p)<= radius + p.radius;
         else return false;
     }
-
-    protected int drawRadius() {
-        if (framesSinceSpawn == -1) return (int) radius;
-        if (framesSinceSpawn++ > ANIMATION_TIME) {
-            framesSinceSpawn = -1;
-            return drawRadius();
-        }
-        // if (parent != null) return (int) radius; // uncomment to disable blow up for mitosis
-        return (int) (radius * getAnimationRatio());
-    }
-
-    private double getAnimationRatio() {
-        return (framesSinceSpawn - 1) / ANIMATION_TIME;
-    }
-
-    protected int drawX() {
-        if (framesSinceSpawn == -1 || parent == null) return (int) x;
-        return (int) (x * getAnimationRatio() + parent.x * (1 - getAnimationRatio()));
-    }
-    protected int drawY() {
-        if (framesSinceSpawn == -1 || parent == null) return (int) y;
-        return (int) (y * getAnimationRatio() + parent.y * (1 - getAnimationRatio()));
-    }
-
     public void draw(){
-        pen.drawCircle(drawX(),drawY(), drawRadius(),Color.WHITE, true);
+        pen.drawCircle(XtoDraw(), YtoDraw(), radiusToDraw(),Color.WHITE, true);
+        animationProgress();
+    }
+    protected void animationProgress(){
+        if (animationPhase==-1) return;
+        if(++animationPhase >= ANIMATION_TIME) animationPhase = -1;
+    }
+    protected double getAnimationRatio(){
+        if (animationPhase==-1) return 1;
+        return (animationPhase/ANIMATION_TIME);
+    }
+    protected int radiusToDraw(){
+        return (int) (radius*getAnimationRatio());
+    }
+    protected int XtoDraw(){
+        if (animationPhase==-1 || parent==null) return (int) x;
+        return (int) (parent.x+(x-parent.x)*getAnimationRatio());
+    }
+    protected int YtoDraw(){
+        if (animationPhase==-1 || parent==null) return (int) y;
+        return (int) (parent.y+(y-parent.y)*getAnimationRatio());
     }
 
     public static class OutOfSpaceException extends Exception{

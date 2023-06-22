@@ -112,10 +112,10 @@ public class Cell extends Particle{
     @Override
     public void draw(){
         //changePhase();  // moved to simulation
-        int drawRadius = drawRadius();
-        int inner = (int) ((innerRadius / radius) * drawRadius);
-        pen.drawCircle(drawX(),drawY(),drawRadius,Color.WHITE, false);
-        pen.drawCircle(drawX(),drawY(),inner,colour, true);
+        int innerR = (int) (innerRadius*radiusToDraw()/radius);
+        pen.drawCircle(XtoDraw(),YtoDraw(),radiusToDraw(),Color.WHITE, false);
+        pen.drawCircle(XtoDraw(),YtoDraw(),innerR,colour, true);
+        animationProgress();
     }
 
     public boolean vulnerableToChemo() {

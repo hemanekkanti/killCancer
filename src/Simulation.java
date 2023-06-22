@@ -24,6 +24,8 @@ public class Simulation {
         //setting the static variables
         Particle.setDimensions(xSize,ySize, lowerEdge, upperEdge);
         Particle.setPen(pen);
+        BloodVessel bloodstream = new BloodVessel(pen);
+        BloodVessel.setDimensions(thickness, lowerEdge, upperEdge, xSize);
 
         //making the lists
         List<Cell> cells = new ArrayList<>(ncells + ncancer);
@@ -35,20 +37,24 @@ public class Simulation {
         Particle.setRestrainList(cells);
         Chemo.setDrugsList(drugs);
 
-        Chemo drug;
 
         int t = 0;
 
         try {
             for (int i = 0; i < ncells; i++) cells.add(new Cell(radius));
             for (int i = 0; i < ncancer; i++) cells.add(new Cancer(radius));
-            drug = new Chemo(30);
         } catch (Particle.OutOfSpaceException s) {
             throw new RuntimeException(s);
         }
 
+        int flowrate=0;
+
         while(true) {
-            pen.drawRectangle(0, (int) lowerEdge, xSize-1, (int) thickness, Color.PINK, true);
+            //drawBloodvessel
+            bloodstream.draw();
+            bloodstream.flow(flowrate);
+
+            //move cells all the while bouncing them properly within the space
             newCells.clear();
             boolean phaseTick = t % 5 == 0;
             cells.forEach(c -> {
@@ -86,6 +92,7 @@ public class Simulation {
             screen.pause(10);
             screen.clear();
             t++;
+            if( flowrate ++ >= 250) flowrate = 0;
         }
     }
 

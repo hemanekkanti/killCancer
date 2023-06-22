@@ -51,17 +51,21 @@ public class Cancer extends Cell{
     @Override
     public void draw(){
         //changePhase(); // moved to simulation
-        int drawRadius = drawRadius();
-        int inner = (int) ((innerRadius / radius) * drawRadius);
-        pen.drawCircle(drawX(),drawY(),drawRadius, Color.WHITE, false);
+        pen.drawCircle(XtoDraw(),YtoDraw(),radiusToDraw(), Color.WHITE, false);
+
+        //spikes for the cancer cells
         int numSpikes = 12;
         for(int i=0; i<numSpikes; i++){
             double theta = i*(2*Math.PI/numSpikes);
-            double x2 = drawX()+1.2*drawRadius * Math.cos(theta);
-            double y2 = drawY()+1.2*drawRadius * Math.sin(theta);
-            pen.drawLine(drawX(),drawY(),(int)x2,(int)y2,Color.WHITE);
+            int x2 = (int)(XtoDraw()+1.2*radiusToDraw() * Math.cos(theta));
+            int y2 = (int) (YtoDraw()+1.2*radiusToDraw() * Math.sin(theta));
+            pen.drawLine(XtoDraw(),YtoDraw(), x2, y2, Color.WHITE);
         }
-        pen.drawCircle(drawX(),drawY(), inner, colour, true);
+
+        //inner nucleus
+        int innerR = (int) (innerRadius * radiusToDraw()/radius);
+        pen.drawCircle(XtoDraw(),YtoDraw(),innerR, colour, true);
+        animationProgress();
     }
 
     @Override
