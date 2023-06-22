@@ -166,7 +166,7 @@ public class Particle {
             framesSinceSpawn = -1;
             return drawRadius();
         }
-        return (int) (radius * ( ANIMATION_TIME / ++framesSinceSpawn));
+        return (int) (radius * (framesSinceSpawn++ / ANIMATION_TIME));
     }
 
     protected int drawX() {
