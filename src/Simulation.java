@@ -8,8 +8,8 @@ public class Simulation {
     public Simulation() {
         final int SCREEN_X = 1000;
         final int SCREEN_Y = 700;
-        final double RADIUS = 15;
-        final int INITIAL_CELLS = 0;
+        final double RADIUS = 40;
+        final int INITIAL_CELLS = 20;
         final int INITIAL_CANCER = 1;
         final int CHEMO_INJECTION = 500;
         final double VEIN_THICKNESS = 300;
@@ -54,7 +54,7 @@ public class Simulation {
                 for (int i = 0; i < INITIAL_CELLS; i++) cells.add(new Cell(RADIUS));
                 for (int i = 0; i < INITIAL_CANCER; i++) cells.add(new Cancer(RADIUS));
             } catch (Particle.OutOfSpaceException s) {
-                throw new RuntimeException(s);
+                throw new RuntimeException("Initial particle count too high. Can't spawn!");
             }}
 
             //move cells all the while bouncing them properly within the space

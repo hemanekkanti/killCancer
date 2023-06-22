@@ -17,7 +17,10 @@ public class Cancer extends Cell{
     @Override
     public void bounceScreen() {
         if (!isInsideVessel()) super.bounceScreen();
-        if (x > xSize + radius) killSelf();
+        if (x > xSize + radius) {
+            killSelf();
+            y = ySize + radius;
+        }
     }
 
     @Override
