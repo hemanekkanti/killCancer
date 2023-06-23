@@ -15,7 +15,7 @@ public class Chemo extends Particle{
     @Override
     protected void spawnParticle() {
         x=5;
-        y = ySize / 2;
+        y = rand.nextDouble(lowerEdge,upperEdge);
     }
 
     @Override
@@ -26,8 +26,8 @@ public class Chemo extends Particle{
             dx += 2;
             dy *= 1 - (x/(xSize*2));
         } else {
-            if (y < ySize/2) dy -= 0.5;
-            else dy += 0.5;
+            if (y < ySize/2) dy -= 0.3;
+            else dy += 0.3;
         }
     }
 

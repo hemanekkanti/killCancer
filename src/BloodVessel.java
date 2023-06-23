@@ -34,9 +34,9 @@ public class BloodVessel {
             }
         }
     }
-    private Color generateRedHue(int i, int flowrate){
+    private Color generateRedHue(int i, int freq){
         float h = 0;
-        float s = (float) (0.3*Math.cos((Math.PI*i/xSize)-(flowrate / 250.0) * 2*Math.PI)+0.6);
+        float s = (float) (0.3*Math.cos((Math.PI*i/xSize)-(freq / 250.0) * 2*Math.PI)+0.6);
         float b = s;
 
         return Color.getHSBColor(h,s,b);

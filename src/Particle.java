@@ -82,13 +82,6 @@ public class Particle {
             else y=upperEdge+radius;
         }
     }
-
-    public void changeDirection(){
-        dx = -dx;
-        dy = -dy;
-    }
-
-
     public void bounceScreen() {
         if (x <= radius || x >= xSize-radius) {
             dx = -dx;
@@ -164,11 +157,11 @@ public class Particle {
     }
     protected int XtoDraw(){
         if (animationPhase==-1 || parent==null) return (int) x;
-        return (int) (parent.x+(x-parent.x)*getAnimationRatio());
+        return (int) (parent.x + (x-parent.x) * getAnimationRatio());
     }
     protected int YtoDraw(){
         if (animationPhase==-1 || parent==null) return (int) y;
-        return (int) (parent.y+(y-parent.y)*getAnimationRatio());
+        return (int) (parent.y + (y-parent.y) * getAnimationRatio());
     }
 
     public static class OutOfSpaceException extends Exception{
