@@ -9,21 +9,20 @@ import java.util.Random;
 public class Simulation {
     public Simulation() {
         //Initializing the screens
-        int xSize = 1000;
-        int ySize = 700;
-        int xAxis = 300;
+        int xSize = 1035;
+        int ySize = 640;
+        int xAxis = 100;
         int yAxis = 400;
-        Canvas screen = new Canvas(xSize, ySize, 30, 50);
+        Canvas screen = new Canvas(xSize, ySize, 0, 0);
         Pen pen = new Pen(screen);
-        Random rand = new Random();
         //Initializing the screen for graph
-        Canvas graph = new Canvas(xAxis, yAxis, 1100, 50);
+        Canvas graph = new Canvas(xAxis, yAxis, xSize+5, 50);
         Pen ink = new Pen(graph);
 
-        double radius = 15;
+        double radius = 20;
         int ncells = 20;
         int ncancer = 1;
-        int ndrugs = 0;
+        int ndrugs;
         int chemoInjectionQuant = 300;
         double thickness = 200;
         double lowerEdge = (ySize - thickness) / 2;
@@ -55,6 +54,8 @@ public class Simulation {
         }
 
         while (true) {
+            //draw background
+            pen.drawRectangle(0,0,xSize,ySize,new Color(35,8,12),true);
             //drawBloodvessel
             bloodstream.draw();
             bloodstream.flow(t % 250);
@@ -81,7 +82,7 @@ public class Simulation {
             ndrugs = drugs.size();
 
             //chemo dosage
-            if (ncancer > 4 && ndrugs < 0.08 * chemoInjectionQuant) Chemo.injectDrugs(chemoInjectionQuant);
+            if (ncancer > 4 && !Chemo.started|| ncancer>0 && ndrugs < 0.08 * chemoInjectionQuant && Chemo.started) Chemo.injectDrugs(chemoInjectionQuant);
             drugs.forEach(chemo -> {
                 chemo.move();
                 //cells.stream().filter(Cell::vulnerableToChemo).filter(chemo::isOverlapping).forEach(Cell::killSelf);
@@ -92,7 +93,6 @@ public class Simulation {
                 chemo.draw();
             });
             drugs.removeIf(Chemo::mustDie);
-            pen.drawString(5, 5, Color.WHITE, "cell count:" + cells.size());
 
             //another panel showing some statistics
             //panels ymax is 200 cells

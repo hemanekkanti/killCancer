@@ -1,6 +1,7 @@
 import java.awt.*;
 
 public class Cancer extends Cell{
+    private static Color BGCOLOUR = new Color(0.0f,0.0f,0.0f,0.5f);
 
     public Cancer(double radius) throws OutOfSpaceException {
         super(radius);
@@ -29,13 +30,13 @@ public class Cancer extends Cell{
     public void changePhase(){
         t+=1;
         double chance = rand.nextDouble();
-        if(t>=60 && phase == cellPhase.G1 && chance<0.07){
+        if(t>=60 && phase == cellPhase.G1 && chance<0.1){
             phase = cellPhase.S;
-        } else if (t>=90 && phase == cellPhase.S && chance<0.08) {
+        } else if (t>=90 && phase == cellPhase.S && chance<0.12) {
             phase = cellPhase.G2;
-        } else if (t>=120 && phase == cellPhase.G2 && chance<0.1) {
+        } else if (t>=120 && phase == cellPhase.G2 && chance<0.2) {
             phase = cellPhase.M;
-        } else if (t>=140 && phase == cellPhase.M && chance<0.06) {
+        } else if (t>=130 && phase == cellPhase.M && chance<0.08) {
             t=1;
             phase = cellPhase.G1;
             try {
@@ -51,7 +52,8 @@ public class Cancer extends Cell{
     @Override
     public void draw(){
         //changePhase(); // moved to simulation
-        pen.drawCircle(XtoDraw(),YtoDraw(),radiusToDraw(), Color.WHITE, false);
+        pen.drawCircle(XtoDraw(),YtoDraw(),radiusToDraw(),BGCOLOUR , true);
+        pen.drawCircle(XtoDraw(),YtoDraw(),radiusToDraw(), colour, false);
 
         //spikes for the cancer cells
         int numSpikes = 12;
@@ -59,7 +61,9 @@ public class Cancer extends Cell{
             double theta = i*(2*Math.PI/numSpikes);
             int x2 = (int)(XtoDraw()+1.2*radiusToDraw() * Math.cos(theta));
             int y2 = (int) (YtoDraw()+1.2*radiusToDraw() * Math.sin(theta));
-            pen.drawLine(XtoDraw(),YtoDraw(), x2, y2, Color.WHITE);
+            pen.drawLine(XtoDraw(),YtoDraw(), x2, y2, colour);
+            //pen.drawLine(x2+1,y2, x2-1, y2+1, colour);
+
         }
 
         //inner nucleus

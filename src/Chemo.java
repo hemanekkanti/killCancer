@@ -3,7 +3,8 @@ import java.util.List;
 public class Chemo extends Particle{
     public static List<Chemo> drugsList;
 
-    private int lifetime_remaining = (int) rand.nextInt(500, 800);
+    private int lifetime_remaining = rand.nextInt(500, 800);
+    public static boolean started;
 
     public Chemo(double radius) throws OutOfSpaceException {
         super(radius);
@@ -15,7 +16,7 @@ public class Chemo extends Particle{
     @Override
     protected void spawnParticle() {
         x=5;
-        y = rand.nextDouble(lowerEdge,upperEdge);
+        y = rand.nextDouble(lowerEdge+radius,upperEdge-radius);
     }
 
     @Override
@@ -24,7 +25,7 @@ public class Chemo extends Particle{
         dy = rand.nextDouble(-8, 8);
         if (isInsideVessel()) {
             dx += 2;
-            dy *= 1 - (x/(xSize*2));
+            //dy *= 1 - (x/(xSize*2));
         } else {
             if (y < ySize/2) dy -= 0.3;
             else dy += 0.3;
@@ -39,6 +40,7 @@ public class Chemo extends Particle{
     }
 
     public static void injectDrugs(int n) {
+        started = true;
         for(int i=0; i<n; i++) {
             try {
                 drugsList.add(new Chemo(10));

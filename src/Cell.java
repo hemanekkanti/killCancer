@@ -46,24 +46,28 @@ public class Cell extends Particle{
         double outerRadius = radius;
         switch (phase) {
             case G1 -> {
-                colour = Color.GREEN;
+                //colour = Color.GREEN;
+                colour = new Color(86,102,165);
                 innerRadius = 0.5 * outerRadius;
             }
             case S -> {
-                colour = Color.RED;
-                innerRadius = 0.7 * outerRadius;
+                //colour = Color.RED;
+                colour = new Color(155,171,183);
+                innerRadius = 0.65 * outerRadius;
             }
             case G2 -> {
-                colour = Color.YELLOW;
+                //colour = Color.YELLOW;
+                colour = new Color(215,191,119);
                 innerRadius = 0.8 * outerRadius;
             }
             case M -> {
-                colour = Color.CYAN;
-                innerRadius = outerRadius;
+                //colour = Color.CYAN;
+                colour = new Color(241, 130, 74);
+                innerRadius = 0.95*outerRadius;
             }
             case G0 -> {
-                colour = Color.GRAY;
-                innerRadius = outerRadius;
+                colour = new Color(33,12,72);
+                innerRadius = 0.95*outerRadius;
             }
         }
     }
@@ -112,7 +116,7 @@ public class Cell extends Particle{
     public void draw(){
         //changePhase();  // moved to simulation
         int innerR = (int) (innerRadius*radiusToDraw()/radius);
-        pen.drawCircle(XtoDraw(),YtoDraw(),radiusToDraw(),Color.WHITE, false);
+        pen.drawCircle(XtoDraw(),YtoDraw(),radiusToDraw(),colour.darker().darker(), true);
         pen.drawCircle(XtoDraw(),YtoDraw(),innerR,colour, true);
         animationProgress();
     }
