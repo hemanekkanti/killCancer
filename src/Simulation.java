@@ -4,34 +4,39 @@ import nano.Pen;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Simulation {
     public Simulation() {
         //Initializing the screens
-        int xSize = 1035;
-        int ySize = 640;
-        int xAxis = 100;
-        int yAxis = 400;
-        Canvas screen = new Canvas(xSize, ySize, 0, 0);
+        int X_LENGTH = 1000;
+        int Y_LENGTH = 640;
+        //Screen dimensions for the graph
+        int X_AXIS = 300;
+        int Y_AXIS = 400;
+
+        //initilazing the main simulation screen
+        Canvas screen = new Canvas(X_LENGTH, Y_LENGTH, 0, 0);
         Pen pen = new Pen(screen);
         //Initializing the screen for graph
-        Canvas graph = new Canvas(xAxis, yAxis, xSize+5, 50);
+        Canvas graph = new Canvas(X_AXIS, Y_AXIS, X_LENGTH+5, 50);
         Pen ink = new Pen(graph);
+        Graph bars = new Graph(ink);
 
-        double radius = 20;
+        double radius = 18;
         int ncells = 20;
         int ncancer = 1;
         int ndrugs;
-        int chemoInjectionQuant = 300;
+        int chemoInjectionQuant = 150;
         double thickness = 200;
-        double lowerEdge = (ySize - thickness) / 2;
+        double lowerEdge = (Y_LENGTH - thickness) / 2;
 
         //setting the static variables
-        Particle.setDimensions(xSize, ySize, lowerEdge, thickness);
+        Particle.setDimensions(X_LENGTH, Y_LENGTH, lowerEdge, thickness);
         Particle.setPen(pen);
         BloodVessel bloodstream = new BloodVessel(pen);
-        BloodVessel.setDimensions(thickness, lowerEdge, xSize);
+        BloodVessel.setDimensions(thickness, lowerEdge, X_LENGTH);
+        Graph.setConstants(X_AXIS,Y_AXIS);
+
 
         //making the lists
         List<Cell> cells = new ArrayList<>(ncells + ncancer);
@@ -55,7 +60,7 @@ public class Simulation {
 
         while (true) {
             //draw background
-            pen.drawRectangle(0,0,xSize,ySize,new Color(35,8,12),true);
+            pen.drawRectangle(0,0,X_LENGTH,Y_LENGTH,new Color(35,8,12),true);
             //drawBloodvessel
             bloodstream.draw();
             bloodstream.flow(t % 250);
@@ -82,7 +87,7 @@ public class Simulation {
             ndrugs = drugs.size();
 
             //chemo dosage
-            if (ncancer > 4 && !Chemo.started|| ncancer>0 && ndrugs < 0.08 * chemoInjectionQuant && Chemo.started) Chemo.injectDrugs(chemoInjectionQuant);
+            if (ncancer > 14 && !Chemo.started|| ncancer>0 && ndrugs < 0.08 * chemoInjectionQuant && Chemo.started) Chemo.injectDrugs(chemoInjectionQuant);
             drugs.forEach(chemo -> {
                 chemo.move();
                 //cells.stream().filter(Cell::vulnerableToChemo).filter(chemo::isOverlapping).forEach(Cell::killSelf);
@@ -95,11 +100,10 @@ public class Simulation {
             drugs.removeIf(Chemo::mustDie);
 
             //another panel showing some statistics
-            //panels ymax is 200 cells
             int [] cellCount = {ncells,ncancer,ndrugs};
-            graph(ink,cellCount,yAxis);
+            bars.plot(cellCount);
 
-            //update all the drawing on the screen and set the refersh rate
+            //update all the drawing on the screen and set the refresh rate
             screen.update();
             graph.update();
             screen.pause(10);
@@ -107,34 +111,7 @@ public class Simulation {
             screen.clear();
             graph.clear();
             t++;
-
-
         }
-    }
-    public void graph(Pen ink, int [] cellCount, int yAxis) {
-        int barWidth = 75;
-        int spacing = 15;
-        int ymax = 400;
-
-        //normalizing values for the screen
-        int normalCells = cellCount[0]*(yAxis-50)/ymax;
-        int cancerCells = cellCount[1]*(yAxis-50)/ymax;
-        int chemoParticles = cellCount[2]*(yAxis-50)/ymax;
-
-        //drawing the bars
-        ink.drawRectangle(spacing, 20, barWidth, normalCells, new Color(100, 170, 190), true);
-        ink.drawRectangle(2*spacing+barWidth, 20, barWidth, cancerCells, new Color(100, 100, 220), true);
-        ink.drawRectangle(3*spacing+2*barWidth, 20, barWidth, chemoParticles, new Color(200, 100, 220), true);
-
-        //adding numbers to the bars
-        ink.drawString(spacing,normalCells+25, Color.white, String.valueOf(cellCount[0]));
-        ink.drawString(2*spacing+barWidth,cancerCells+25, Color.white, String.valueOf(cellCount[1]));
-        ink.drawString(3*spacing+2*barWidth,chemoParticles+25, Color.white, String.valueOf(cellCount[2]));
-
-        //adding description text below the bars
-        ink.drawString(spacing,5, Color.white, "Normal Cells");
-        ink.drawString(2*spacing+barWidth,5, Color.white, "Cancer Cells");
-        ink.drawString(3*spacing+2*barWidth,5, Color.white, "Chemo dose");
     }
 
     public static void main(String[] args) {

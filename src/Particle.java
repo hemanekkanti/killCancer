@@ -141,10 +141,10 @@ public class Particle {
         else return false;
     }
     public void draw(){
-        pen.drawCircle(XtoDraw(), YtoDraw(), radiusToDraw(),new Color(1f,1f,1f,0.5f), true);
-        animationProgress();
+        pen.drawCircle(XtoDraw(), YtoDraw(), (int) radiusToDraw(),new Color(1f,1f,1f,0.5f), true);
+        animateRadius();
     }
-    protected void animationProgress(){
+    protected void animateRadius(){
         if (animationPhase==-1) return;
         if(++animationPhase >= ANIMATION_TIME) animationPhase = -1;
     }
@@ -152,8 +152,8 @@ public class Particle {
         if (animationPhase==-1) return 1;
         return (animationPhase/ANIMATION_TIME);
     }
-    protected int radiusToDraw(){
-        return (int) (radius*getAnimationRatio());
+    protected double radiusToDraw(){
+        return  radius*getAnimationRatio();
     }
     protected int XtoDraw(){
         if (animationPhase==-1 || parent==null) return (int) x;

@@ -3,7 +3,7 @@ import java.util.List;
 public class Chemo extends Particle{
     public static List<Chemo> drugsList;
 
-    private int lifetime_remaining = rand.nextInt(500, 800);
+    private int lifetime_remaining = rand.nextInt(600, 800);
     public static boolean started;
 
     public Chemo(double radius) throws OutOfSpaceException {
@@ -21,14 +21,13 @@ public class Chemo extends Particle{
 
     @Override
     protected void randomizeDirection() {
-        dx = rand.nextDouble(-8, 8);
-        dy = rand.nextDouble(-8, 8);
+        dx = rand.nextDouble(-10, 10);
+        dy = rand.nextDouble(-10, 10);
         if (isInsideVessel()) {
-            dx += 2;
-            //dy *= 1 - (x/(xSize*2));
+            dx += 3;
         } else {
-            if (y < ySize/2) dy -= 0.3;
-            else dy += 0.3;
+            //if (y < ySize/2) dy -= 0.4;
+            //else dy += 0.4;
         }
     }
 
@@ -43,7 +42,7 @@ public class Chemo extends Particle{
         started = true;
         for(int i=0; i<n; i++) {
             try {
-                drugsList.add(new Chemo(10));
+                drugsList.add(new Chemo(8));
             } catch (OutOfSpaceException e) {
                 throw new RuntimeException("No space for chemo, even though it can overlap");
             }

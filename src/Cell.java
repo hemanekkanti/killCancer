@@ -1,97 +1,79 @@
 import java.awt.*;
 import java.util.List;
 
-import java.util.Random;
-
 public class Cell extends Particle{
-    protected Color colour = Color.BLUE;
-    protected double innerRadius;
-    protected cellPhase phase;
+    protected final static int PHASE_CHANGE_TIME = 1;
+    protected CellPhase phase;
+
     protected static List<Cell> newCellList;
+
     public static void setNewCellList(List<Cell> l) {newCellList = l;}
+
     protected int t;
+
+    protected CellPhase lastPhase;
+
+    private int phaseTransitionTime = PHASE_CHANGE_TIME;
+
     private int numberOfdivisions;
 
     public Cell(double radius) throws OutOfSpaceException {
         super(radius);
         phase = spawnPhase();
-        phases();
+        lastPhase = phase;
     }
 
     protected Cell(double radius, Cell parent) throws OutOfSpaceException {
         super(radius, parent);
-        phase = cellPhase.G1;
-        phases();
+        phase = CellPhase.G1;
+        lastPhase=phase;
     }
-    protected enum cellPhase{
-        G1,
-        S,
-        G2,
-        M,
-        G0;
+    protected enum CellPhase {
+        G1(0.5, new Color(86,102,165)),
+        S(0.65, new Color(155,171,183)),
+        G2(0.8, new Color(215,191,119)),
+        M(0.95, new Color(255, 99, 44)),
+        G0(0.95, new Color(33,12,72));
+        final double radius;
+        final Color colour;
+
+        CellPhase(double radius, Color colour){
+            this.radius = radius;
+            this.colour = colour;
+        }
     }
 
-    protected cellPhase spawnPhase(){
+    protected CellPhase spawnPhase(){
         int stage = rand.nextInt(4);
         switch (stage){
-            case 0 -> {t=1;}
-            case 1 -> {t=120;}
-            case 2 -> {t=200;}
-            case 3 -> {t=240;}
+            case 0 -> t=1;
+            case 1 -> t=120;
+            case 2 -> t=200;
+            case 3 -> t=240;
         }
-        return cellPhase.values()[stage];
+        return CellPhase.values()[stage];
     }
 
-    public void phases(){
-        double outerRadius = radius;
-        switch (phase) {
-            case G1 -> {
-                //colour = Color.GREEN;
-                colour = new Color(86,102,165);
-                innerRadius = 0.5 * outerRadius;
-            }
-            case S -> {
-                //colour = Color.RED;
-                colour = new Color(155,171,183);
-                innerRadius = 0.65 * outerRadius;
-            }
-            case G2 -> {
-                //colour = Color.YELLOW;
-                colour = new Color(215,191,119);
-                innerRadius = 0.8 * outerRadius;
-            }
-            case M -> {
-                //colour = Color.CYAN;
-                colour = new Color(241, 130, 74);
-                innerRadius = 0.95*outerRadius;
-            }
-            case G0 -> {
-                colour = new Color(33,12,72);
-                innerRadius = 0.95*outerRadius;
-            }
-        }
-    }
 
     public void changePhase(){
         t+=1;
         double chance = rand.nextDouble();
-        if(t>120 && phase == cellPhase.G1 && chance<0.07){
-            phase = cellPhase.S;
-        } else if (t>200 && phase == cellPhase.S && chance<0.08) {
-            phase = cellPhase.G2;
-        } else if (t>240 && phase == cellPhase.G2 && chance<0.1) {
-            phase = cellPhase.M;
-        } else if (t>260 && phase == cellPhase.M && chance<0.06) {
+        if(t>120 && phase == CellPhase.G1 && chance<0.07){
+            phase = CellPhase.S;
+        } else if (t>200 && phase == CellPhase.S && chance<0.08) {
+            phase = CellPhase.G2;
+        } else if (t>240 && phase == CellPhase.G2 && chance<0.1) {
+            phase = CellPhase.M;
+        } else if (t>255 && phase == CellPhase.M && chance<0.06) {
             t=1;
-            phase = cellPhase.G1;
+            phase = CellPhase.G1;
             try {
                 addChildCell();
             } catch (OutOfSpaceException e) {
-                phase = cellPhase.G0;
+                phase = CellPhase.G0;
                 t=261;
             }
         }
-        phases();
     }
 
     protected Cell createChild() throws OutOfSpaceException {
@@ -114,14 +96,40 @@ public class Cell extends Particle{
 
     @Override
     public void draw(){
-        //changePhase();  // moved to simulation
-        int innerR = (int) (innerRadius*radiusToDraw()/radius);
-        pen.drawCircle(XtoDraw(),YtoDraw(),radiusToDraw(),colour.darker().darker(), true);
-        pen.drawCircle(XtoDraw(),YtoDraw(),innerR,colour, true);
-        animationProgress();
+        animatePhase();
+        pen.drawCircle(XtoDraw(),YtoDraw(), (int) radiusToDraw(),colourToDraw().darker().darker(), true);
+        pen.drawCircle(XtoDraw(),YtoDraw(),innerRadiusToDraw(),colourToDraw(), true);
+        animateRadius();
     }
 
     public boolean vulnerableToChemo() {
-        return phase == cellPhase.M;
+        return phase == CellPhase.M;
+    }
+
+    protected void animatePhase(){
+        //reactivate animation if the phase changes
+        if(phaseTransitionTime == 0 && phase != lastPhase) phaseTransitionTime = PHASE_CHANGE_TIME+1;
+        //finish animation by setting the current phase as the last phase
+        if (phaseTransitionTime == 1) lastPhase = phase;
+        //phase transition must be between 0 and 20
+        if(phaseTransitionTime > 0) phaseTransitionTime--;
+    }
+
+    protected Color colourToDraw(){
+        float t = phaseTransitionTime/(float)PHASE_CHANGE_TIME;
+        Color currentColour = phase.colour;
+        Color previousColour = lastPhase.colour;
+        return new Color(
+                (int) (previousColour.getRed()*t + currentColour.getRed()*(1f-t)),
+                (int) (previousColour.getGreen()*t + currentColour.getGreen()*(1f-t)),
+                (int) (previousColour.getBlue()*t + currentColour.getBlue()*(1f-t))
+        );
+    }
+
+    protected int innerRadiusToDraw(){
+        float t = phaseTransitionTime/(float)PHASE_CHANGE_TIME;
+        double currentRadius = phase.radius;
+        double previousRadius = lastPhase.radius;
+        return (int) (radiusToDraw()*((currentRadius*(1f-t))+(previousRadius*t)));
     }
 }
