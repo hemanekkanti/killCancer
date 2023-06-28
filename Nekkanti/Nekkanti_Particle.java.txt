@@ -6,8 +6,8 @@ import java.util.Random;
 import static java.lang.Math.abs;
 
 public class Particle {
-    private static final double ANIMATION_TIME = 30;
     protected double radius;
+    private static final double ANIMATION_TIME = 30;
     protected static Pen pen;
     protected double x;
     protected double y;

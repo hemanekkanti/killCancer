@@ -1,0 +1,20 @@
+Index: src/BloodVessel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\nimport java.awt.Color;\nimport nano.*;\nimport java.util.Random;\npublic class BloodVessel {\n    private static int thickness;\n    private static double lowerEdge;\n    private static int xSize;\n    private static Pen pen;\n    private static final Random rand = new Random();\n    private static Color colour;\n\n    public BloodVessel(Pen pen){\n        BloodVessel.pen = pen;\n        setColour();\n    }\n\n    public static void setDimensions(double thickness, double lowerEdge, int xSize){\n        BloodVessel.thickness = (int) thickness;\n        BloodVessel.lowerEdge = lowerEdge;\n        BloodVessel.xSize = xSize;\n    }\n\n    public void draw(){\n        pen.drawRectangle(0, (int) lowerEdge, xSize-1, thickness+1, Color.white, false);\n    }\n\n    public void flow(int freq){\n        for (int i = 0; i < xSize; i++) {\n            Color redShade = generateRedHue(i, freq);\n            if (i % 8 == 0) {\n                pen.drawRectangle(i, (int) lowerEdge, 4, thickness, redShade.darker(), true);\n                pen.drawRectangle(i + 4, (int) lowerEdge, 4, thickness, redShade, true);\n            }\n        }\n    }\n    private Color generateRedHue(int i, int freq){\n        float h = 0;\n        float s = (float) (0.3*Math.cos((Math.PI*i/xSize)-(freq / 250.0) * 2*Math.PI)+0.6);\n        float b = s;\n\n        return Color.getHSBColor(h,s,b);\n    }\n\n    private Color generateColor(){\n        float h = rand.nextFloat(0,1);\n        float s = rand.nextFloat(0.7F,1);\n        float b = rand.nextFloat(0.9F,1);\n\n        return Color.getHSBColor(h,s,b);\n    }\n    private void setColour(){\n        BloodVessel.colour = generateColor();\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/BloodVessel.java b/src/BloodVessel.java
+--- a/src/BloodVessel.java	(revision f72cf2fa3a300f0eae86e166deba30d53fbec5fb)
++++ b/src/BloodVessel.java	(date 1687629138512)
+@@ -8,7 +8,8 @@
+     private static int xSize;
+     private static Pen pen;
+     private static final Random rand = new Random();
+-    private static Color colour;
++
++
+ 
+     public BloodVessel(Pen pen){
+         BloodVessel.pen = pen;

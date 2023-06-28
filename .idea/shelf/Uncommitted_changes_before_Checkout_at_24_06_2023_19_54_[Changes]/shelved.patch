@@ -1,0 +1,20 @@
+Index: src/BloodVessel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\nimport java.awt.Color;\nimport nano.*;\n\nimport java.util.Arrays;\nimport java.util.Random;\npublic class BloodVessel {\n    private static int thickness;\n\n    public static double getUpperEdge() {\n        return (lowerEdge+thickness);\n    }\n    public static double getLowerEdge() {\n        return lowerEdge;\n    }\n\n    private static double lowerEdge;\n    private static int xSize;\n    private static Pen pen;\n    private static final Random rand = new Random();\n    private static Color colour;\n\n    private static class Blob extends Particle {\n\n        private static Blob[] blobs;\n        private final Color color = new Color(1f,0.5f,0.5f,rand.nextFloat(0.1f, 0.2f));\n\n        private final double v = rand.nextDouble(1,3);\n\n        public Blob(double radius) throws OutOfSpaceException {super(radius);}\n        public static void makeBlobs(int n, double size) {\n            blobs = new Blob[n];\n            for (int j = 0; j<blobs.length; j++) {\n                try {blobs[j] = new Blob(rand.nextDouble(size, size*2));} catch (Exception e) {e.printStackTrace();}\n            }\n        }\n        public static void drawBlobs() {for (int i = 0; i< blobs.length; i++){blobs[i].draw();}}\n        @Override\n        protected void spawnParticle() {\n            x = rand.nextDouble(-radius, xSize+radius);\n            y = rand.nextDouble(lowerEdge+radius, lowerEdge+thickness-radius);\n        }\n        @Override\n        public void move() {\n            x+=v;\n            if (x - radius > xSize) x = -radius;\n        }\n        @Override\n        public void draw() {\n            pen.drawCircle((int)x, (int)y, (int)radius, color, true);\n            move();\n        }\n    }\n\n    public BloodVessel(Pen pen){\n        BloodVessel.pen = pen;\n        setColour();\n    }\n\n    public static void setDimensions(double thickness, double lowerEdge, int xSize){\n        BloodVessel.thickness = (int) thickness;\n        BloodVessel.lowerEdge = lowerEdge;\n        BloodVessel.xSize = xSize;\n        Blob.makeBlobs(100, 10);\n    }\n\n    public void draw(){\n        pen.drawRectangle(0, (int) lowerEdge, xSize-1, thickness+1, Color.white, false);\n    }\n\n    public void flow(int freq){\n        for (int i = 0; i < xSize; i++) {\n            Color redShade = generateRedHue(i, freq);\n            if (i % 8 == 0) {\n                pen.drawRectangle(i, (int) lowerEdge, 4, thickness, redShade.darker(), true);\n                pen.drawRectangle(i + 4, (int) lowerEdge, 4, thickness, redShade, true);\n            }\n        }\n        Blob.drawBlobs();\n    }\n    private Color generateRedHue(int i, int flowrate){\n        float h = 0;\n        float s = (float) (0.3*Math.cos((Math.PI*i/xSize)-(flowrate / 250.0) * 2*Math.PI)+0.6);\n        float b = s;\n\n        return Color.getHSBColor(h,s,b);\n    }\n\n    private Color generateColor(){\n        float h = rand.nextFloat(0,1);\n        float s = rand.nextFloat(0.7F,1);\n        float b = rand.nextFloat(0.9F,1);\n\n        return Color.getHSBColor(h,s,b);\n    }\n    private void setColour(){\n        BloodVessel.colour = generateColor();\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/BloodVessel.java b/src/BloodVessel.java
+--- a/src/BloodVessel.java	(revision 2cae4f6a7913c9cff384fef14d0a38075de01588)
++++ b/src/BloodVessel.java	(date 1687629238802)
+@@ -18,7 +18,8 @@
+     private static int xSize;
+     private static Pen pen;
+     private static final Random rand = new Random();
+-    private static Color colour;
++
++
+ 
+     private static class Blob extends Particle {
+ 

@@ -87,7 +87,7 @@ public class Simulation {
             ndrugs = drugs.size();
 
             //chemo dosage
-            if (ncancer > 15 && !Chemo.started|| ncancer>0 && ndrugs < 0.08 * chemoInjectionQuant && Chemo.started) Chemo.injectDrugs(chemoInjectionQuant);
+            if (ncancer > 14 && !Chemo.started|| ncancer>0 && ndrugs < 0.08 * chemoInjectionQuant && Chemo.started) Chemo.injectDrugs(chemoInjectionQuant);
             drugs.forEach(chemo -> {
                 chemo.move();
                 //cells.stream().filter(Cell::vulnerableToChemo).filter(chemo::isOverlapping).forEach(Cell::killSelf);
