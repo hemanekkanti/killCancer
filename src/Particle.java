@@ -123,8 +123,7 @@ public class Particle {
     public boolean thatsMySPOT() {
         if (x <= radius || x >= xSize-radius) return false;
         if (y <= radius || y >= ySize-radius) return false;
-        if (isInsideVessel() || onOuterEdge()) return false;
-        return true;
+        return !isInsideVessel() && !onOuterEdge();
     }
 
     protected void randomizeDirection() {

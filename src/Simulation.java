@@ -5,11 +5,19 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is the Master class that renders the whole design
+ * @author Hema Nekkanti
+ */
+
 public class Simulation {
+    /**
+     * This method intializes the graphic screen and all the cell over the iteration of time
+     */
     public Simulation() {
         //Initializing the screens
-        int X_LENGTH = 900;
-        int Y_LENGTH = 640;
+        int X_LENGTH = 1024;
+        int Y_LENGTH = 800;
         //Screen dimensions for the graph
         int X_AXIS = 300;
         int Y_AXIS = 400;
@@ -18,7 +26,7 @@ public class Simulation {
         Canvas screen = new Canvas(X_LENGTH, Y_LENGTH, 0, 0);
         Pen pen = new Pen(screen);
         //Initializing the screen for graph
-        Canvas graph = new Canvas(X_AXIS, Y_AXIS, X_LENGTH+50, 50);
+        Canvas graph = new Canvas(X_AXIS, Y_AXIS, X_LENGTH + 50, 50);
         Pen ink = new Pen(graph);
         Graph bars = new Graph(ink);
 
@@ -26,8 +34,8 @@ public class Simulation {
         int ncells = 25;
         int ncancer = 3;
         int ndrugs;
-        int chemoInjectionQuant = 150;
-        double thickness = 200;
+        int chemoInjectionQuant = 400;
+        double thickness = 250; //does not work above a certain value; program crashes
         double lowerEdge = (Y_LENGTH - thickness) / 2;
 
         //setting the static variables
@@ -35,7 +43,7 @@ public class Simulation {
         Particle.setPen(pen);
         BloodVessel bloodstream = new BloodVessel(pen);
         BloodVessel.setDimensions(thickness, lowerEdge, X_LENGTH);
-        Graph.setConstants(X_AXIS,Y_AXIS);
+        Graph.setConstants(X_AXIS, Y_AXIS);
 
 
         //making the lists
@@ -60,7 +68,7 @@ public class Simulation {
 
         while (true) {
             //draw background
-            pen.drawRectangle(0,0,X_LENGTH,Y_LENGTH,new Color(35,8,12),true);
+            pen.drawRectangle(0, 0, X_LENGTH, Y_LENGTH, new Color(35, 8, 12), true);
             //drawBloodvessel
             bloodstream.draw();
             bloodstream.flow(t % 250);
@@ -87,7 +95,8 @@ public class Simulation {
             ndrugs = drugs.size();
 
             //chemo dosage
-            if (ncancer > 15 && !Chemo.started|| ncancer>0 && ndrugs < 0.08 * chemoInjectionQuant && Chemo.started) Chemo.injectDrugs(chemoInjectionQuant);
+            if (ncancer > 15 && !Chemo.started || ncancer > 0 && ndrugs < 0.08 * chemoInjectionQuant && Chemo.started)
+                Chemo.injectDrugs(chemoInjectionQuant);
             drugs.forEach(chemo -> {
                 chemo.move();
                 //cells.stream().filter(Cell::vulnerableToChemo).filter(chemo::isOverlapping).forEach(Cell::killSelf);
