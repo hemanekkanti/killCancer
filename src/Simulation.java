@@ -14,7 +14,7 @@ public class Simulation {
     /**
      * This method intializes the graphic screen and all the cell over the iteration of time
      */
-    public Simulation() {
+    public Simulation(Environment options) {
         //Initializing the screens
         int X_LENGTH = 1024;
         int Y_LENGTH = 800;
@@ -31,7 +31,7 @@ public class Simulation {
         Graph bars = new Graph(ink);
 
         double radius = 18;
-        int ncells = 25;
+        int ncells = options.getInitialCells();
         int ncancer = 3;
         int ndrugs;
         int chemoInjectionQuant = 400;
@@ -47,7 +47,7 @@ public class Simulation {
 
 
         //making the lists
-        List<Cell> cells = new ArrayList<>(ncells + ncancer);
+        List<Cell> cells = new ArrayList<>(options.getInitialCells() + ncancer);
         List<Cell> newCells = new ArrayList<>();
         List<Chemo> drugs = new ArrayList<>(chemoInjectionQuant);
 
@@ -60,7 +60,7 @@ public class Simulation {
         int t = 0;
 
         try {
-            for (int i = 0; i < ncells; i++) cells.add(new Cell(radius));
+            for (int i = 0; i < options.getInitialCells(); i++) cells.add(new Cell(radius));
             for (int i = 0; i < ncancer; i++) cells.add(new Cancer(radius));
         } catch (Particle.OutOfSpaceException s) {
             throw new RuntimeException(s);
@@ -120,10 +120,6 @@ public class Simulation {
             graph.clear();
             t++;
         }
-    }
-
-    public static void main(String[] args) {
-        Simulation e = new Simulation();
     }
 
 }
